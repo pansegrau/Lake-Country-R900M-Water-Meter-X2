@@ -31,6 +31,11 @@
 - Once you find your Irrigation meter, enter it as an environment variable in the Resin dashboard under "METERID"
 - Once you find your Main meter, enter it as an environment variable in the Resin dashboard under "METERID2"
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
+## Sample Output
+
+- 09.08.17 16:34:02 (-0700) Consumption Pit Meter : 836.507 Cubic Meters
+- 09.08.17 16:34:02 (-0700) Consumption Irrigation: 758.411 Cubic Meters
+- 09.08.17 16:34:02 (-0700) Consumption House     : 78 Cubic Meters
 
 ## My current setup
 ![Raspberry Pi](https://cloud.githubusercontent.com/assets/2868/21464807/14e7c1b6-c957-11e6-8049-69b19969f817.jpg)
