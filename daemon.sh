@@ -7,6 +7,13 @@ if [ -z "$METERID" ]; then
   exit 0
 fi
 
+if [ -z "$METERID2" ]; then
+  echo "METERID2 not set, launching in debug mode"
+  echo "Enter Terminal via Resin and run 'rtlamr -msgtype=r900' to see all the local water meters and find your meter ID"
+  rtl_tcp
+  exit 0
+fi
+
 # Kill this script (and restart the container) if we haven't seen an update in 30 minutes
 ./watchdog.sh 30 updated.log &
 
@@ -19,9 +26,37 @@ while true; do
   json=$(rtlamr -msgtype=r900 -filterid=$METERID -single=true -format=json)
   echo "Meter info: $json"
 
-  consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/10000')
-  echo "Current consumption: $consumption CCF"
-
+  consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
+  echo "Consumption Irrigation Meter: $consumption Cubic Meters"
+  irrmeter=$consumption
+  
+  irr=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
+  
+  #convert to integer
+  irrint=${irr%.*}
+  
+  json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
+  echo "Pit meter info: $json"
+  
+  consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
+  #echo "Consumption Pit Meter: $consumption Cubic Meters"
+  pitmeter=$consumption
+  
+  pit=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
+  
+  #convert to integer
+  pitint=${pit%.*}
+  
+  # subtract irrigation meter from main pit meter
+  house=$(echo $((pitint - irrint)))
+  #convert to cubic meters
+  housemeter=$(echo $((house / 1000)))
+  
+  #now echo all three together
+  echo "Consumption Pit Meter : $pitmeter Cubic Meters"
+  echo "Consumption Irrigation: $irrmeter Cubic Meters"
+  echo "Consumption House     : $housemeter Cubic Meters"
+  
   # Replace with your custom logging code
   if [ ! -z "$STATX_APIKEY" ]; then
     echo "Logging to StatX"
