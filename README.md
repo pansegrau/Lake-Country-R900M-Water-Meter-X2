@@ -1,4 +1,4 @@
-# Raspberry Pi tracker for Two Neptune R900M smart water meters.
+# Raspberry Pi tracker for two Neptune R900M smart water meters.
 
 ### Goals
 - A Raspberry Pi and a RTL-SDR to track my smart water meter
