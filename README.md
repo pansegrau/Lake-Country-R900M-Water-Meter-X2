@@ -5,7 +5,7 @@
 - Docker to simplify the installation and setup of RTLAMR
 - Resin.io to deploy this docker container to the Raspberry Pi in my house
 - Since I have two meters in series with deductive billing, I deduct the consumption of the second meter from the consumption of the main meter.
-- Be aware the R900M does not transmit rate of flow information in it FM radio signal. My original intention was to track the rate of flow (that can be read on the digital display of the meter) on my cell phone to know if my drip irrigartion system is functioning correctly.
+- Be aware the R900M does not transmit rate of flow information in its FM radio signal. My original intention was to track the rate of flow (that can be read on the digital display of the meter) on my cell phone to know if my drip irrigartion system is functioning correctly.
 
 ## Credit
 
