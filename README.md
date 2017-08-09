@@ -5,10 +5,11 @@
 - Docker to simplify the installation and setup of RTLAMR
 - Resin.io to deploy this docker container to the Raspberry Pi in my house
 - Since I have two meters in series with deductive billing, I deduct the consumption of the second meter from the consumption of the main meter.
+- Be aware the R900M does not transmit rate of flow information in it FM radio signal. My original intention was to track the rate of flow (that can be read on the digital display of the meter) on my cell phone to know if my drip irrigartion system is functioning correctly.
 
 ## Credit
 
-- I modified the Atlanta meter daemon.sh file (https://github.com/mdp/AtlantaWaterMeter) to fit my two meter situation.  I also changed the units from Cubic Feet to Cubic Meters as Lake Country uses Neptune R900M meters measuring in metric.
+- I copied everything from Atlanta Water Meter (https://github.com/mdp/AtlantaWaterMeter) and modified the daemon.sh file to fit my two meter deductive billing situation here in Lake Country Canada.  I also changed the units from Cubic Feet to Cubic Meters as Lake Country uses the Neptune R900M meters which measure consumption in metric.
 - @besmasher - Built the excellent [RTLAMR](https://github.com/bemasher/rtlamr) library which actually does all the work of reading the meters.
 - [Frederik Granna's](https://bitbucket.org/fgranna/) docker base for setting up RTL-SDR on the Raspberry Pi
 
@@ -32,5 +33,4 @@
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 
 ## My current setup
-
-![StatX Screenshot](https://cloud.githubusercontent.com/assets/2868/21464808/1ad63648-c957-11e6-9be4-7c3dc1b2b307.png) ![Raspberry Pi](https://cloud.githubusercontent.com/assets/2868/21464807/14e7c1b6-c957-11e6-8049-69b19969f817.jpg)
+![Raspberry Pi](https://cloud.githubusercontent.com/assets/2868/21464807/14e7c1b6-c957-11e6-8049-69b19969f817.jpg)
