@@ -1,12 +1,14 @@
-# Raspberry Pi tracker for Neptune R900 smart water meters
+# Raspberry Pi tracker for Two Neptune R900M smart water meters.
 
 ### Goals
 - A Raspberry Pi and a RTL-SDR to track my smart water meter
 - Docker to simplify the installation and setup of RTLAMR
 - Resin.io to deploy this docker container to the Raspberry Pi in my house
+- Since I have two meters in series with deductive billing, I deduct the consumption of the second meter from the consumption of the main meter.
 
 ## Credit
 
+- I modified the Atlanta meter daemon.sh file (https://github.com/mdp/AtlantaWaterMeter) to fit my two meter situation.  I also changed the units from Cubic Feet to Cubic Meters as Lake Country uses Neptune R900M meters measuring in metric.
 - @besmasher - Built the excellent [RTLAMR](https://github.com/bemasher/rtlamr) library which actually does all the work of reading the meters.
 - [Frederik Granna's](https://bitbucket.org/fgranna/) docker base for setting up RTL-SDR on the Raspberry Pi
 
@@ -25,7 +27,8 @@
 - Plug in your RTL-SDR into the USB port on the Raspberry Pi
 - git push this repository to your Resin application
 - SSH into your Raspberry Pi via Resin and start 'rtlamr' to find water meters in your area
-- Once you find your meter, enter it as an environment variable in the Resin dashboard under "METERID"
+- Once you find your Irrigation meter, enter it as an environment variable in the Resin dashboard under "METERID"
+- Once you find your Main meter, enter it as an environment variable in the Resin dashboard under "METERID2"
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 
 ## My current setup
