@@ -25,4 +25,3 @@ COPY watchdog.sh .
 RUN chmod +x *.sh
 
 CMD ./daemon.sh
-
