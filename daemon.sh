@@ -51,7 +51,7 @@ while true; do
   house=$(echo $((pitint - irrint)))
   #convert to cubic meters
   housemeter=$(echo $((house / 1000)))
-  
+  echo "test update"
   #now echo all three together
   echo "Consumption Pit Meter : $pitmeter Cubic Meters"
   echo "Consumption Irrigation: $irrmeter Cubic Meters"
