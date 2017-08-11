@@ -51,11 +51,11 @@ while true; do
   house=$(echo $((pitint - irrint)))
   #convert to cubic meters
   housemeter=$(echo $((house / 1000)))
-  echo "test update"
+  echo "test 2nd update"
   #now echo all three together
-  echo "Consumption Pit Meter : $pitmeter Cubic Meters"
-  echo "Consumption Irrigation: $irrmeter Cubic Meters"
-  echo "Consumption House     : $housemeter Cubic Meters"
+  echo "Consumption Pit Meter     : $pitmeter Cubic Meters"
+  echo "Consumption Irrigation    : $irrmeter Cubic Meters"
+  echo "Consumption Non-Irrigation: $housemeter Cubic Meters"
   
   # Replace with your custom logging code
   if [ ! -z "$STATX_APIKEY" ]; then
