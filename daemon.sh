@@ -62,11 +62,11 @@ while true; do
   housemeter=$(echo $((house / 1000)))
   
   #calculate irrigation consumption for previous night
-  if [[ `date +%H` -ge 9 && `date +%H` -lt 25 ]];then
+  if [[ `date +%H` -ge 9 && `date +%H` -lt 10 ]];then
     night=$(echo $((morning - evening)))
     flowrate=$(echo $((night / 720)))  
   fi
-  
+  echo "Tt is presently the "`date +%H`"th hour of the day"
   echo "Total Consumption of Irrigation meter at 9 PM : $evening Litres"
   echo "Total Consumption of Irrigation meter at 9 AM : $morning Litres"
   echo "Irrigation consumption last night was         : $night Litres"
