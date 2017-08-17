@@ -44,7 +44,7 @@ while true; do
   fi
   
   # record data for nightly consumption of Irrigation meter at 9 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 14 && `date +%H` -lt 15 ]];then
+  if [[ `date +%H` -ge 15 && `date +%H` -lt 16 ]];then
     export morning=$irrint
   fi
 
@@ -66,7 +66,7 @@ while true; do
   housemeter=$(echo $((house / 1000)))
   
   #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
-  if [[ `date +%H` -ge 15 && `date +%H` -lt 16 ]];then
+  if [[ `date +%H` -ge 16 && `date +%H` -lt 17 ]];then
     night=$(echo $((morning - evening)))
     export night2=$night
     flowrate=$(echo $((night / 720)))
