@@ -35,6 +35,17 @@ while true; do
   #convert to integer
   irrint=${irr%.*}
   
+   #record data for nightly consumption of Irrigation meter
+  if [[ `date +%H` -ge 20 && `date +%H` -lt 21 ]];then
+    evening="$irrint"
+    echo "Total Consumption of Irrigation meter at 9 PM : $evening Litres"
+  fi
+
+  if [[ `date +%H` -ge 8 && `date +%H` -lt 9 ]];then
+    morning="$irrint"
+    echo "Total Consumption of Irrigation meter at 9 AM : $morning Litres"
+  fi
+
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
   echo "Pit meter info: $json"
   
@@ -51,7 +62,15 @@ while true; do
   house=$(echo $((pitint - irrint)))
   #convert to cubic meters
   housemeter=$(echo $((house / 1000)))
-  echo "test 2nd update"
+  
+  #calculate irrigation consumption for previous night
+  if [[ `date +%H` -ge 9 && `date +%H` -lt 25 ]];then
+    night=$(echo $((morning - evening)))
+    echo "Irrigation consumption last night was: $night Litres"
+    flowrate=$(echo $((night / 720)))
+    echo "Average Irrigation rate of flow last night: $flowrate Litres per Min"
+  fi
+
   #now echo all three together
   echo "Consumption Pit Meter     : $pitmeter Cubic Meters"
   echo "Consumption Irrigation    : $irrmeter Cubic Meters"
