@@ -35,12 +35,13 @@ while true; do
   #convert to integer
   irrint=${irr%.*}
   
-   #record data for nightly consumption of Irrigation meter
-  if [[ `date +%H` -ge 20 && `date +%H` -lt 21 ]];then
+  # record data for nightly consumption of Irrigation meter at 9 PM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 3 && `date +%H` -lt 4 ]];then
     evening="$irrint"
   fi
-
-  if [[ `date +%H` -ge 8 && `date +%H` -lt 9 ]];then
+  
+  # record data for nightly consumption of Irrigation meter at 9 AM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 13 && `date +%H` -lt 14 ]];then
     morning="$irrint"
   fi
 
@@ -61,16 +62,16 @@ while true; do
   #convert to cubic meters
   housemeter=$(echo $((house / 1000)))
   
-  #calculate irrigation consumption for previous night
-  if [[ `date +%H` -ge 9 && `date +%H` -lt 10 ]];then
+  #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
+  if [[ `date +%H` -ge 14 && `date +%H` -lt 15 ]];then
     night=$(echo $((morning - evening)))
     flowrate=$(echo $((night / 720)))  
   fi
-  echo "Tt is presently the "`date +%H`"th hour of the day"
-  echo "Total Consumption of Irrigation meter at 9 PM : $evening Litres"
-  echo "Total Consumption of Irrigation meter at 9 AM : $morning Litres"
-  echo "Irrigation consumption last night was         : $night Litres"
-  echo "Average Irrigation rate of flow last night    : $flowrate Litres per min"
+  echo "It is presently the "`date +%H`"th hour (UTC) of the day"
+  echo "Total Consumption of Irrigation meter at 9 PM (PDT)          : $evening Litres"
+  echo "Total Consumption of Irrigation meter at 9 AM (PDT)          : $morning Litres"
+  echo "Irrigation consumption last night from 9 PM to 9 AM (PDT) was: $night Litres"
+  echo "Average Irrigation rate of flow last night                   : $flowrate Litres per min"
    
   #now echo all three together
   echo "Consumption Pit Meter     : $pitmeter Cubic Meters"
