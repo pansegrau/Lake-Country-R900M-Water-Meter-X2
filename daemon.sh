@@ -85,18 +85,18 @@ while true; do
   morning=$(cat /data/binmorning)
   night=$(cat /data/binnight)
   flowrate=$(cat /data/binflowrate)
-  
+  echo " ---------------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
+  echo "Daily Consumption Data in Litres -------------------------------------------------------"
   echo "Total Consumption of Irrigation meter at 9 PM (PDT)          : $evening Litres"
   echo "Total Consumption of Irrigation meter at 9 AM (PDT)          : $morning Litres"
   echo "Irrigation consumption last night from 9 PM to 9 AM (PDT) was: $night Litres"
   echo "Average Irrigation rate of flow last night                   : $flowrate Litres per min"
-   
-  #now echo all three together
-  echo "Consumption Pit Meter     : $pitmeter Cubic Meters"
-  echo "Consumption Irrigation    : $irrmeter Cubic Meters"
-  echo "Consumption Non-Irrigation: $housemeter Cubic Meters"
-  
+  echo "Total Consumption Data in Cubic Meters -------------------------------------------------"
+  echo "Consumption Pit Meter                                        : $pitmeter Cubic Meters"
+  echo "Consumption Irrigation                                       : $irrmeter Cubic Meters"
+  echo "Consumption Non-Irrigation                                   : $housemeter Cubic Meters"
+  echo " ---------------------------------------------------------------------------------------"
   # Replace with your custom logging code
   if [ ! -z "$STATX_APIKEY" ]; then
     echo "Logging to StatX"
