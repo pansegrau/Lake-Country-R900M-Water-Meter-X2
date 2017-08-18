@@ -2,8 +2,8 @@
 
 declare -i evening
 declare -i morning
-declare -i night2
-declare -i flowrate2
+declare -i night
+declare -i flowrate
 
 if [ -z "$METERID" ]; then
   echo "METERID not set, launching in debug mode"
@@ -43,11 +43,13 @@ while true; do
   # record data for nightly consumption of Irrigation meter at 9 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 3 && `date +%H` -lt 4 ]];then
     export evening=$irrint
+    export evening = "/data/"
   fi
   
   # record data for nightly consumption of Irrigation meter at 9 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 15 && `date +%H` -lt 16 ]];then
+  if [[ `date +%H` -ge 12 && `date +%H` -lt 16 ]];then
     export morning=$irrint
+    export morning = "/data/"
   fi
 
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
@@ -70,16 +72,16 @@ while true; do
   #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
   if [[ `date +%H` -ge 16 && `date +%H` -lt 17 ]];then
     night=$(echo $((morning - evening)))
-    export night2=$night
     flowrate=$(echo $((night / 720)))
-    export flowrate2=$flowrate
+    export night = "/data/"
+    export flowrate = "/data/"
   fi
   
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
   echo "Total Consumption of Irrigation meter at 9 PM (PDT)          : $evening Litres"
   echo "Total Consumption of Irrigation meter at 9 AM (PDT)          : $morning Litres"
-  echo "Irrigation consumption last night from 9 PM to 9 AM (PDT) was: $night2 Litres"
-  echo "Average Irrigation rate of flow last night                   : $flowrate2 Litres per min"
+  echo "Irrigation consumption last night from 9 PM to 9 AM (PDT) was: $night Litres"
+  echo "Average Irrigation rate of flow last night                   : $flowrate Litres per min"
    
   #now echo all three together
   echo "Consumption Pit Meter     : $pitmeter Cubic Meters"
