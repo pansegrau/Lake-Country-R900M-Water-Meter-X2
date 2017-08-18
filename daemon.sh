@@ -4,6 +4,8 @@ declare -i evening
 declare -i morning
 declare -i night
 declare -i flowrate
+declare -i house
+declare -i housemidnight
 
 if [ -z "$METERID" ]; then
   echo "METERID not set, launching in debug mode"
@@ -69,8 +71,20 @@ while true; do
   #convert to cubic meters
   housemeter=$(echo $((house / 1000)))
   
-  #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
+  # record data for daily house consumption of House at 1 AM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 7 && `date +%H` -lt 8 ]];then
+     echo $house > /data/binhouse1AM
+  fi
   
+  # record data for daily house consumption of House at 12 AM (time is adjusted due to UTC)
+  # and then compute daily consumption
+  if [[ `date +%H` -ge 6 && `date +%H` -lt 7 ]];then
+     house1AM=$(cat /data/binhouse1AM)
+     housemidnight=$(echo $((house1AM - house)))
+     echo $housemidnight > /data/binhousemidnight
+  fi
+  
+  #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
   if [[ `date +%H` -ge 16 && `date +%H` -lt 17 ]];then
     evening=$(cat /data/binevening)
     morning=$(cat /data/binmorning)
@@ -81,17 +95,20 @@ while true; do
   fi
   
   # recall data from disk as program may have rebooted
+  housemidnight=$(cat /data/binhousemidnight)
   evening=$(cat /data/binevening)
   morning=$(cat /data/binmorning)
   night=$(cat /data/binnight)
   flowrate=$(cat /data/binflowrate)
+  #now to display the information
   echo " ---------------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
   echo "Daily Consumption Data in Litres -------------------------------------------------------"
   echo "Total Consumption of Irrigation meter at 9 PM (PDT)          : $evening Litres"
   echo "Total Consumption of Irrigation meter at 9 AM (PDT)          : $morning Litres"
-  echo "Irrigation consumption last night from 9 PM to 9 AM (PDT) was: $night Litres"
+  echo "Irrigation Consumption last night from 9 PM to 9 AM (PDT) was: $night Litres"
   echo "Average Irrigation rate of flow last night                   : $flowrate Litres per min"
+  echo "House Consumption for the previous calandar day              : $housemidnight Litres"
   echo "Total Consumption Data in Cubic Meters -------------------------------------------------"
   echo "Consumption Pit Meter                                        : $pitmeter Cubic Meters"
   echo "Consumption Irrigation                                       : $irrmeter Cubic Meters"
