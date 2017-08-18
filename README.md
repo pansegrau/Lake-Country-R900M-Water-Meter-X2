@@ -30,6 +30,7 @@
 - SSH into your Raspberry Pi via Resin and start 'rtlamr' to find water meters in your area
 - Once you find your Irrigation meter, enter it as an environment variable in the Resin dashboard under "METERID"
 - Once you find your Main meter, enter it as an environment variable in the Resin dashboard under "METERID2"
+- For the very first installation the program needs to run for 24 hours to obtain correct output data.
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 ## Sample Output
 
