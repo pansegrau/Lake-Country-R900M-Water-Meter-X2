@@ -1,5 +1,7 @@
 #!/bin/bash
 
+declare -i evening
+declare -i morning
 declare -i night2
 declare -i flowrate2
 
