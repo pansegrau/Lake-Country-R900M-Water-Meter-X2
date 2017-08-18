@@ -43,13 +43,13 @@ while true; do
   # record data for nightly consumption of Irrigation meter at 9 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 3 && `date +%H` -lt 4 ]];then
     export evening=$irrint
-    echo evening > /data/pymeterbin
+    echo $evening > /data/binevening
   fi
   
   # record data for nightly consumption of Irrigation meter at 9 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 12 && `date +%H` -lt 16 ]];then
     export morning=$irrint
-    echo morning > /data/pymeterbin2
+    echo $morning > /data/binmorning
   fi
 
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
@@ -73,8 +73,8 @@ while true; do
   if [[ `date +%H` -ge 16 && `date +%H` -lt 17 ]];then
     night=$(echo $((morning - evening)))
     flowrate=$(echo $((night / 720)))
-    echo night > /data/pymeterbin3
-    echo flowrate > /data/pymeterbin4
+    echo $night > /data/binnight
+    echo $flowrate > /data/binflowrate
   fi
   
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
