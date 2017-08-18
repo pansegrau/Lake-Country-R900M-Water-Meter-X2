@@ -70,16 +70,19 @@ while true; do
   housemeter=$(echo $((house / 1000)))
   
   #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
-  evening=$(cat /data/binevening)
-  morning=$(cat /data/binmorning)
+  
   if [[ `date +%H` -ge 16 && `date +%H` -lt 17 ]];then
+    evening=$(cat /data/binevening)
+    morning=$(cat /data/binmorning)
     night=$(echo $((morning - evening)))
     flowrate=$(echo $((night / 720)))
     echo $night > /data/binnight
     echo $flowrate > /data/binflowrate
   fi
   
-  # recall data from disk
+  # recall data from disk as program may have rebooted
+  evening=$(cat /data/binevening)
+  morning=$(cat /data/binmorning)
   night=$(cat /data/binnight)
   flowrate=$(cat /data/binflowrate)
   
