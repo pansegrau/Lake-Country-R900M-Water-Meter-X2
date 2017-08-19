@@ -3,7 +3,9 @@
 declare -i evening
 declare -i morning
 declare -i night
+declare -i day
 declare -i flowrate
+declare -i dayrate
 declare -i house
 declare -i housemidnight
 
@@ -93,27 +95,41 @@ while true; do
     echo $flowrate > /data/binflowrate
   fi
   
+  #calculate irrigation consumption for previous day performed after 9 PM (adjusted for UTC)
+  if [[ `date +%H` -ge 4 && `date +%H` -lt 5 ]];then
+    evening=$(cat /data/binevening)
+    morning=$(cat /data/binmorning)
+    day=$(echo $((evening - morning)))
+    dayrate=$(echo $((day / 720)))
+    echo $day > /data/binday
+    echo $dayrate > /data/bindayrate
+  fi
+  
   # recall data from disk as program may have rebooted
   housemidnight=$(cat /data/binhousemidnight)
   evening=$(cat /data/binevening)
   morning=$(cat /data/binmorning)
   night=$(cat /data/binnight)
   flowrate=$(cat /data/binflowrate)
+  day=$(cat /data/binday)
+  dayrate=$(cat /data/bindayrate)
   
   #display the information in resin log
-  echo " ---------------------------------------------------------------------------------------"
+  echo " ----------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
-  echo "Daily Consumption Data in Litres -------------------------------------------------------"
-  echo "Total Consumption of Irrigation meter at 9 PM (PDT)          : $evening Litres"
-  echo "Total Consumption of Irrigation meter at 9 AM (PDT)          : $morning Litres"
-  echo "Irrigation Consumption last night from 9 PM to 9 AM (PDT) was: $night Litres"
-  echo "Average Irrigation rate of flow last night                   : $flowrate Litres per min"
-  echo "House Consumption for the previous calandar day              : $housemidnight Litres"
-  echo "Total Consumption Data in Cubic Meters -------------------------------------------------"
-  echo "Consumption Pit Meter                                        : $pitmeter Cubic Meters"
-  echo "Consumption Irrigation                                       : $irrmeter Cubic Meters"
-  echo "Consumption Non-Irrigation                                   : $housemeter Cubic Meters"
-  echo " ---------------------------------------------------------------------------------------"
+  echo "Daily Consumption Data in Litres --------------------------------------------------"
+  echo "Total Consumption of Irrigation meter at 9 PM (PDT)    : $evening Litres"
+  echo "Total Consumption of Irrigation meter at 9 AM (PDT)    : $morning Litres"
+  echo "Irrigation Consumption last night (9PM to 9AM PDT) was : $night Litres"
+  echo "Irrigation Consumption yesterday  (9AM to 9PM PDT) was : $day Litres"
+  echo "Average Irrigation rate of flow last night (9PM to 9AM): $flowrate Litres per min"
+  echo "Average Irrigation rate of flow yesterday  (9AM to 9PM): $dayrate Litres per min"
+  echo "House Consumption for the previous calandar day        : $housemidnight Litres"
+  echo "Total Consumption Data in Cubic Meters ---------------------------------------------"
+  echo "Consumption Pit Meter                                  : $pitmeter Cubic Meters"
+  echo "Consumption Irrigation                                 : $irrmeter Cubic Meters"
+  echo "Consumption Non-Irrigation                             : $housemeter Cubic Meters"
+  echo " -----------------------------------------------------------------------------------"
  
   # Replace with your custom logging code
   if [ ! -z "$STATX_APIKEY" ]; then
