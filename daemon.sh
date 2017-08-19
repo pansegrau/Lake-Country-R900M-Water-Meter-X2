@@ -32,13 +32,14 @@ while true; do
 
   json=$(rtlamr -msgtype=r900 -filterid=$METERID -single=true -format=json)
   echo "Meter info: $json"
-
+  
+  #Collect data from Irrigation meter
   consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
   echo "Consumption Irrigation Meter: $consumption Cubic Meters"
   irrmeter=$consumption
-  
   irr=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
   
+  #Now process that data from Irrigation meter
   #convert to integer
   irrint=${irr%.*}
   
@@ -53,19 +54,17 @@ while true; do
     morning=$irrint
     echo $morning > /data/binmorning
   fi
-
+  
+  #Collect data from Pit meter
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
   echo "Pit meter info: $json"
-  
   consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
-  #echo "Consumption Pit Meter: $consumption Cubic Meters"
   pitmeter=$consumption
-  
   pit=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
   
+  #Now process data 
   #convert to integer
   pitint=${pit%.*}
-  
   # subtract irrigation meter from main pit meter
   house=$(echo $((pitint - irrint)))
   #convert to cubic meters
@@ -80,7 +79,7 @@ while true; do
   # and then compute daily consumption
   if [[ `date +%H` -ge 6 && `date +%H` -lt 7 ]];then
      house1AM=$(cat /data/binhouse1AM)
-     housemidnight=$(echo $((house1AM - house)))
+     housemidnight=$(echo $((house - house1AM)))
      echo $housemidnight > /data/binhousemidnight
   fi
   
@@ -100,7 +99,8 @@ while true; do
   morning=$(cat /data/binmorning)
   night=$(cat /data/binnight)
   flowrate=$(cat /data/binflowrate)
-  #now to display the information
+  
+  #display the information in resin log
   echo " ---------------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
   echo "Daily Consumption Data in Litres -------------------------------------------------------"
@@ -114,6 +114,7 @@ while true; do
   echo "Consumption Irrigation                                       : $irrmeter Cubic Meters"
   echo "Consumption Non-Irrigation                                   : $housemeter Cubic Meters"
   echo " ---------------------------------------------------------------------------------------"
+ 
   # Replace with your custom logging code
   if [ ! -z "$STATX_APIKEY" ]; then
     echo "Logging to StatX"
