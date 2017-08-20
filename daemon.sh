@@ -1,7 +1,5 @@
 #!/bin/bash
 
-declare -i evening
-declare -i morning
 declare -i night
 declare -i day
 declare -i flowrate
@@ -47,28 +45,28 @@ while true; do
   
   # record data for nightly consumption of Irrigation meter at 9 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 3 && `date +%H` -lt 4 ]];then
-    evening=$irrint
-    echo $evening > /data/bin9PM
+    t9PM=$irrint
+    echo $t9PM > /data/bin9PM
   fi
   # record data for nightly consumption of Irrigation meter at 12 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 6 && `date +%H` -lt 7 ]];then
-    evening12AM=$irrint
-    echo $evening12AM > /data/bin12AM
+    t12AM=$irrint
+    echo $t12AM > /data/bin12AM
   fi
   # record data for nightly consumption of Irrigation meter at 3 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 9 && `date +%H` -lt 10 ]];then
-    evening3AM=$irrint
-    echo $evening3AM > /data/bin3AM
+    t3AM=$irrint
+    echo $t3AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 6 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 12 && `date +%H` -lt 13 ]];then
-    evening6AM=$irrint
-    echo $evening6AM > /data/bin6AM
+    t6AM=$irrint
+    echo $t6AM > /data/bin6AM
   fi
   # record data for nightly consumption of Irrigation meter at 9 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 15 && `date +%H` -lt 16 ]];then
-    morning=$irrint
-    echo $morning > /data/bin9AM
+    t9AM=$irrint
+    echo $t9AM > /data/bin9AM
   fi
   
   #Collect data from Pit meter
@@ -101,38 +99,38 @@ while true; do
   
   #calculate irrigation consumption for previous night done after 9 AM (adjusted for UTC)
   if [[ `date +%H` -ge 16 && `date +%H` -lt 17 ]];then
-    evening=$(cat /data/bin9PM)
-    evening12AM=$(cat /data/bin12AM)
-    evening3AM=$(cat /data/bin3AM)
-    evening6AM=$(cat /data/bin6AM)
-    morning=$(cat /data/bin9AM)
-    night=$(echo $((morning - evening)))
-    zone1=$(echo $((evening12AM - evening)))
-    zone2=$(echo $((evening3AM - evening12AM)))
-    zone3=$(echo $((evening6AM - evening3AM)))
-    zone4=$(echo $((morning - evening6AM)))
+    t9PM=$(cat /data/bin9PM)
+    t12AM=$(cat /data/bin12AM)
+    t3AM=$(cat /data/bin3AM)
+    t6AM=$(cat /data/bin6AM)
+    t9AM=$(cat /data/bin9AM)
+    night=$(echo $((t9AM - t9PM)))
+    zone1=$(echo $((t12AM - t9PM)))
+    zone2=$(echo $((t3AM - t12AM)))
+    zone3=$(echo $((t6AM - t3AM)))
+    zone4=$(echo $((t9AM - t6AM)))
     flowrate=$(echo $((night / 720)))
-    flowzone1=$(echo $((zone1 / 720)))
-    flowzone2=$(echo $((zone2 / 720)))
-    flowzone3=$(echo $((zone3 / 720)))
-    flowzone4=$(echo $((zone4 / 720)))
+    flowzone1=$(echo $((zone1 / 180)))
+    flowzone2=$(echo $((zone2 / 180)))
+    flowzone3=$(echo $((zone3 / 180)))
+    flowzone4=$(echo $((zone4 / 180)))
     echo $night > /data/binnight
     echo $zone1 > /data/binzone1
     echo $zone2 > /data/binzone2
     echo $zone3 > /data/binzone3
     echo $zone4 > /data/binzone4
     echo $flowrate > /data/binflowrate
-    echo $flowzone1 /data/binflowzone1
-    echo $flowzone2> /data/binflowzone2
-    echo $flowzone3> /data/binflowzone3
-    echo $flowzone4> /data/binflowzone4
+    echo $flowzone1 > /data/binflowzone1
+    echo $flowzone2 > /data/binflowzone2
+    echo $flowzone3 > /data/binflowzone3
+    echo $flowzone4 > /data/binflowzone4
   fi
   
   #calculate irrigation consumption for previous day performed after 9 PM (adjusted for UTC)
   if [[ `date +%H` -ge 4 && `date +%H` -lt 5 ]];then
-    evening=$(cat /data/bin9PM)
-    morning=$(cat /data/bin9AM)
-    day=$(echo $((evening - morning)))
+    t9PM=$(cat /data/bin9PM)
+    t9AM=$(cat /data/bin9AM)
+    day=$(echo $((t9PM - t9AM)))
     dayrate=$(echo $((day / 720)))
     echo $day > /data/binday
     echo $dayrate > /data/bindayrate
@@ -140,8 +138,8 @@ while true; do
   
   # recall data from disk as program may have rebooted
   housemidnight=$(cat /data/binhousemidnight)
-  evening=$(cat /data/bin9PM)
-  morning=$(cat /data/bin9AM)
+  t9PM=$(cat /data/bin9PM)
+  t9AM=$(cat /data/bin9AM)
   night=$(cat /data/binnight)
   zone1=$(cat /data/binzone1)
   zone2=$(cat /data/binzone2)
@@ -158,19 +156,15 @@ while true; do
   #display the information in resin log
   echo " ----------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
-  echo "Irrigation Consumption 9PM to 12AM PDT was Zone 1: $zone1 Litres"
-  echo "Irrigation Consumption 12AM to 3AM PDT was Zone 2: $zone2 Litres"
-  echo "Irrigation Consumption 3AM to 6AM PDT was  Zone 3: $zone3 Litres"
-  echo "Irrigation Consumption 6AM to 9AM PDT was  Zone 4: $zone4 Litres"
-  echo "Average Irrigation 9PM to 12AM PDT was     Zone 1: $flowzone1 Litres per min"
-  echo "Average Irrigation 12AM to 3AM PDT was     Zone 2: $flowzone2 Litres per min"  
-  echo "Average Irrigation 3AM to 6AM PDT was      Zone 3: $flowzone3 Litres per min"  
-  echo "Average Irrigation 6AM to 9AM PDT was      Zone 4: $flowzone4 Litres per min"
+  echo "Irrigation Consumption 9PM to 12AM PDT was Zone 1: $zone1 Litres : $flowzone1 Litres per min"
+  echo "Irrigation Consumption 12AM to 3AM PDT was Zone 2: $zone2 Litres : $flowzone2 Litres per min"
+  echo "Irrigation Consumption 3AM to 6AM PDT was  Zone 3: $zone3 Litres : $flowzone3 Litres per min"
+  echo "Irrigation Consumption 6AM to 9AM PDT was  Zone 4: $zone4 Litres : $flowzone4 Litres per min"
   echo "Daily Consumption Data in Litres --------------------------------------------------"
-  echo "Total Consumption of Irrigation meter at 9 PM (PDT)    : $evening Litres"
-  echo "Total Consumption of Irrigation meter at 9 AM (PDT)    : $morning Litres"
-  echo "Irrigation Consumption last night (9PM to 9AM PDT) was : $night Litres"
-  echo "Irrigation Consumption yesterday  (9AM to 9PM PDT) was : $day Litres"
+  echo "Total Consumption of Irrigation meter at 9 PM (PDT)    : $t9PM Litres"
+  echo "Total Consumption of Irrigation meter at 9 AM (PDT)    : $t9AM Litres"
+  echo "Irrigation Consumption last night (9PM to 9AM PDT)     : $night Litres"
+  echo "Irrigation Consumption yesterday  (9AM to 9PM PDT)     : $day Litres"
   echo "Average Irrigation rate of flow last night (9PM to 9AM): $flowrate Litres per min"
   echo "Average Irrigation rate of flow yesterday  (9AM to 9PM): $dayrate Litres per min"
   echo "House Consumption for the previous calandar day        : $housemidnight Litres"
