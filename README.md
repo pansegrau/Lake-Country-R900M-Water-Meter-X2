@@ -34,9 +34,18 @@
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 ## Sample Output
 
-- 09.08.17 16:34:02 (-0700) Consumption Pit Meter : 836.507 Cubic Meters
-- 09.08.17 16:34:02 (-0700) Consumption Irrigation: 758.411 Cubic Meters
-- 09.08.17 16:34:02 (-0700) Consumption House     : 78 Cubic Meters
+- 19.08.17 23:36:31 (-0700) Daily Consumption Data in Litres --------------------------------------------------
+- 19.08.17 23:36:31 (-0700) Total Consumption of Irrigation meter at 9 PM (PDT)    : 915888 Litres
+- 19.08.17 23:36:31 (-0700) Total Consumption of Irrigation meter at 9 AM (PDT)    : 911094 Litres
+- 19.08.17 23:36:31 (-0700) Irrigation Consumption last night (9PM to 9AM PDT) was : 10221 Litres
+- 19.08.17 23:36:31 (-0700) Irrigation Consumption yesterday  (9AM to 9PM PDT) was : 4794 Litres
+- 19.08.17 23:36:31 (-0700) Average Irrigation rate of flow last night (9PM to 9AM): 14 Litres per min
+- 19.08.17 23:36:31 (-0700) Average Irrigation rate of flow yesterday  (9AM to 9PM): 6 Litres per min
+- 19.08.17 23:36:31 (-0700) House Consumption for the previous calandar day        : 504 Litres
+- 19.08.17 23:36:31 (-0700) Total Consumption Data in Cubic Meters ---------------------------------------------
+- 19.08.17 23:36:31 (-0700) Consumption Pit Meter                                  : 998.155 Cubic Meters
+- 19.08.17 23:36:31 (-0700) Consumption Irrigation                                 : 916.294 Cubic Meters
+- 19.08.17 23:36:31 (-0700) Consumption Non-Irrigation                             : 81 Cubic Meters
 
 ## My current setup
 ![Raspberry Pi](https://cloud.githubusercontent.com/assets/2868/21464807/14e7c1b6-c957-11e6-8049-69b19969f817.jpg)
