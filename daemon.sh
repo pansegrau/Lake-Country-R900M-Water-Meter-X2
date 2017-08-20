@@ -6,6 +6,10 @@ declare -i flowrate
 declare -i dayrate
 declare -i house
 declare -i housemidnight
+declare -i ZONETIMEA
+declare -i ZONETIMEB
+declare -i ZONETIMEC
+declare -i ZONETIMED
 
 if [ -z "$METERID" ]; then
   echo "METERID not set, launching in debug mode"
@@ -17,6 +21,30 @@ fi
 if [ -z "$METERID2" ]; then
   echo "METERID2 not set, launching in debug mode"
   echo "Enter Terminal via Resin and run 'rtlamr -msgtype=r900' to see all the local water meters and find your meter ID"
+  rtl_tcp
+  exit 0
+fi
+if [ -z "$ZONETIMEA" ]; then
+  echo "ZONETIMEA not set, launching in debug mode"
+  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
+  rtl_tcp
+  exit 0
+fi
+if [ -z "$ZONETIMEB" ]; then
+  echo "ZONETIMEB not set, launching in debug mode"
+  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
+  rtl_tcp
+  exit 0
+fi
+if [ -z "$ZONETIMEC" ]; then
+  echo "ZONETIMEC not set, launching in debug mode"
+  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
+  rtl_tcp
+  exit 0
+fi
+if [ -z "$ZONETIMED" ]; then
+  echo "ZONETIMED not set, launching in debug mode"
+  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
   rtl_tcp
   exit 0
 fi
@@ -105,25 +133,25 @@ while true; do
     t6AM=$(cat /data/bin6AM)
     t9AM=$(cat /data/bin9AM)
     night=$(echo $((t9AM - t9PM)))
-    zone1=$(echo $((t12AM - t9PM)))
-    zone2=$(echo $((t3AM - t12AM)))
-    zone3=$(echo $((t6AM - t3AM)))
-    zone4=$(echo $((t9AM - t6AM)))
+    zoneA=$(echo $((t12AM - t9PM)))
+    zoneB=$(echo $((t3AM - t12AM)))
+    zoneC=$(echo $((t6AM - t3AM)))
+    zoneD=$(echo $((t9AM - t6AM)))
     flowrate=$(echo $((night / 720)))
-    flowzone1=$(echo $((zone1 / 180)))
-    flowzone2=$(echo $((zone2 / 180)))
-    flowzone3=$(echo $((zone3 / 180)))
-    flowzone4=$(echo $((zone4 / 180)))
+    flowzoneA=$(echo $((zoneA / ZONETIMEA)))
+    flowzoneB=$(echo $((zoneB / ZONETIMEB)))
+    flowzoneC=$(echo $((zoneC / ZONETIMEC)))
+    flowzoneD=$(echo $((zoneD / ZONETIMED)))
     echo $night > /data/binnight
-    echo $zone1 > /data/binzone1
-    echo $zone2 > /data/binzone2
-    echo $zone3 > /data/binzone3
-    echo $zone4 > /data/binzone4
+    echo $zoneA > /data/binzoneA
+    echo $zoneB > /data/binzoneB
+    echo $zoneC > /data/binzoneC
+    echo $zoneD > /data/binzoneD
     echo $flowrate > /data/binflowrate
-    echo $flowzone1 > /data/binflowzone1
-    echo $flowzone2 > /data/binflowzone2
-    echo $flowzone3 > /data/binflowzone3
-    echo $flowzone4 > /data/binflowzone4
+    echo $flowzoneA > /data/binflowzoneA
+    echo $flowzoneB > /data/binflowzoneB
+    echo $flowzoneC > /data/binflowzoneC
+    echo $flowzoneD > /data/binflowzoneD
   fi
   
   #calculate irrigation consumption for previous day performed after 9 PM (adjusted for UTC)
@@ -141,25 +169,25 @@ while true; do
   t9PM=$(cat /data/bin9PM)
   t9AM=$(cat /data/bin9AM)
   night=$(cat /data/binnight)
-  zone1=$(cat /data/binzone1)
-  zone2=$(cat /data/binzone2)
-  zone3=$(cat /data/binzone3)
-  zone4=$(cat /data/binzone4)
+  zoneA=$(cat /data/binzoneA)
+  zoneB=$(cat /data/binzoneB)
+  zoneC=$(cat /data/binzoneC)
+  zoneD=$(cat /data/binzoneD)
   flowrate=$(cat /data/binflowrate)
-  flowzone1=$(cat /data/binflowzone1)
-  flowzone2=$(cat /data/binflowzone2)
-  flowzone3=$(cat /data/binflowzone3)
-  flowzone4=$(cat /data/binflowzone4)
+  flowzoneA=$(cat /data/binflowzoneA)
+  flowzoneB=$(cat /data/binflowzoneB)
+  flowzoneC=$(cat /data/binflowzoneC)
+  flowzoneD=$(cat /data/binflowzoneD)
   day=$(cat /data/binday)
   dayrate=$(cat /data/bindayrate)
   
   #display the information in resin log
   echo " ----------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
-  echo "Irrigation Consumption 9PM to 12AM PDT was Zone 1: $zone1 Litres : $flowzone1 Litres per min"
-  echo "Irrigation Consumption 12AM to 3AM PDT was Zone 2: $zone2 Litres : $flowzone2 Litres per min"
-  echo "Irrigation Consumption 3AM to 6AM PDT was  Zone 3: $zone3 Litres : $flowzone3 Litres per min"
-  echo "Irrigation Consumption 6AM to 9AM PDT was  Zone 4: $zone4 Litres : $flowzone4 Litres per min"
+  echo "Irrigation Consumption 9PM to 12AM PDT was Zone 1: $zoneA Litres : $flowzoneA Litres per min"
+  echo "Irrigation Consumption 12AM to 3AM PDT was Zone 2: $zoneB Litres : $flowzoneB Litres per min"
+  echo "Irrigation Consumption 3AM to 6AM PDT was  Zone 3: $zoneC Litres : $flowzoneC Litres per min"
+  echo "Irrigation Consumption 6AM to 9AM PDT was  Zone 4: $zoneD Litres : $flowzoneD Litres per min"
   echo "Daily Consumption Data in Litres --------------------------------------------------"
   echo "Total Consumption of Irrigation meter at 9 PM (PDT)    : $t9PM Litres"
   echo "Total Consumption of Irrigation meter at 9 AM (PDT)    : $t9AM Litres"
