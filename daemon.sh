@@ -112,10 +112,10 @@ while true; do
     zone3=$(echo $((evening6AM - evening3AM)))
     zone4=$(echo $((morning - evening6AM)))
     flowrate=$(echo $((night / 720)))
-    flowzone1=$(echo $((night2 / 720)))
-    flowzone2=$(echo $((night3 / 720)))
-    flowzone3=$(echo $((night4 / 720)))
-    flowzone4=$(echo $((night5 / 720)))
+    flowzone1=$(echo $((zone1 / 720)))
+    flowzone2=$(echo $((zone2 / 720)))
+    flowzone3=$(echo $((zone3 / 720)))
+    flowzone4=$(echo $((zone4 / 720)))
     echo $night > /data/binnight
     echo $zone1 > /data/binzone1
     echo $zone2 > /data/binzone2
