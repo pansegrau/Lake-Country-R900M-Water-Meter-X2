@@ -32,19 +32,19 @@ if [ -z "$ZONETIMEA" ]; then
 fi
 if [ -z "$ZONETIMEB" ]; then
   echo "ZONETIMEB not set, launching in debug mode"
-  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
+  echo "Enter Environment variable ZONETIMEB with an integer (use 180 or flow time setting on auto valve)"
   rtl_tcp
   exit 0
 fi
 if [ -z "$ZONETIMEC" ]; then
   echo "ZONETIMEC not set, launching in debug mode"
-  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
+  echo "Enter Environment variable ZONETIMEC with an integer (use 180 or flow time setting on auto valve)"
   rtl_tcp
   exit 0
 fi
 if [ -z "$ZONETIMED" ]; then
   echo "ZONETIMED not set, launching in debug mode"
-  echo "Enter Environment variable ZONETIMEA with an integer (use 180 or flow time setting on auto valve)"
+  echo "Enter Environment variable ZONETIMED with an integer (use 180 or flow time setting on auto valve)"
   rtl_tcp
   exit 0
 fi
