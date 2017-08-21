@@ -145,6 +145,7 @@ while true; do
      echo $housemidnight > /data/binhousemidnight
   fi
   #need timely updates for irrigation troubleshooting
+    echo "Timely updates for Irrigation trouble-shooting"
     t6PM=$(cat /data/bin6PM)
     t9PM=$(cat /data/bin9PM)
     t12AM=$(cat /data/bin12AM)
@@ -188,12 +189,12 @@ while true; do
     zoneE=$(echo $((t9AM - t6AM)))
     zoneF=$(echo $((t12PM - t9AM)))
     flowrate=$(echo $((100 * night / 720))| sed 's/..$/.&/')
-    flowzoneA=$(echo $((zoneA / ZONETIMEA)))
-    flowzoneB=$(echo $((zoneB / ZONETIMEB)))
-    flowzoneC=$(echo $((zoneC / ZONETIMEC)))
-    flowzoneD=$(echo $((zoneD / ZONETIMED)))
-    flowzoneE=$(echo $((zoneE / ZONETIMEE)))
-    flowzoneF=$(echo $((zoneF / ZONETIMEF)))
+    flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/')
+    flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
+    flowzoneC=$(echo $((100 * zoneC / ZONETIMEC))| sed 's/..$/.&/')
+    flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
+    flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
+    flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
     echo $night > /data/binnight
     echo $zoneA > /data/binzoneA
     echo $zoneB > /data/binzoneB
