@@ -161,11 +161,11 @@ while true; do
     zoneE=$(echo $((t9AM - t6AM)))
     zoneF=$(echo $((t12PM - t9AM)))
     flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/') 
-    flowzoneB=$(echo $((zoneB / ZONETIMEB)))
-    flowzoneC=$(echo $((zoneC / ZONETIMEC)))
-    flowzoneD=$(echo $((zoneD / ZONETIMED)))
-    flowzoneE=$(echo $((zoneE / ZONETIMEE)))
-    flowzoneF=$(echo $((zoneF / ZONETIMEF)))
+    flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
+    flowzoneC=$(echo $((100 * zoneC / ZONETIMEC))| sed 's/..$/.&/')
+    flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
+    flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
+    flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
     echo "Zone A:$zoneA flowrate:$flowzoneA"
     echo "Zone B:$zoneB flowrate:$flowzoneB"
     echo "Zone C:$zoneC flowrate:$flowzoneC"
@@ -189,7 +189,7 @@ while true; do
     zoneD=$(echo $((t6AM - t3AM)))
     zoneE=$(echo $((t9AM - t6AM)))
     zoneF=$(echo $((t12PM - t9AM)))
-    flowrate=$(echo $((night / 720)))
+    flowrate=$(echo $((100 * night / 720))| sed 's/..$/.&/')
     flowzoneA=$(echo $((zoneA / ZONETIMEA)))
     flowzoneB=$(echo $((zoneB / ZONETIMEB)))
     flowzoneC=$(echo $((zoneC / ZONETIMEC)))
@@ -217,7 +217,7 @@ while true; do
     t9PM=$(cat /data/bin9PM)
     t9AM=$(cat /data/bin9AM)
     day=$(echo $((t9PM - t9AM)))
-    dayrate=$(echo $((day / 720)))
+    dayrate=$(echo $((100 * day / 720))| sed 's/..$/.&/')
     echo $day > /data/binday
     echo $dayrate > /data/bindayrate
   fi
