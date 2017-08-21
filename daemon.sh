@@ -146,7 +146,33 @@ while true; do
      housemidnight=$(echo $((house - house1AM)))
      echo $housemidnight > /data/binhousemidnight
   fi
-  
+  #need timely updates for irrigation troubleshooting
+    t6PM=$(cat /data/bin6PM)
+    t9PM=$(cat /data/bin9PM)
+    t12AM=$(cat /data/bin12AM)
+    t3AM=$(cat /data/bin3AM)
+    t6AM=$(cat /data/bin6AM)
+    t9AM=$(cat /data/bin9AM)
+    t12PM=$(cat /data/bin12PM)
+    zoneA=$(echo $((t9PM - t6PM)))
+    zoneB=$(echo $((t12AM - t9PM)))
+    zoneC=$(echo $((t3AM - t12AM)))
+    zoneD=$(echo $((t6AM - t3AM)))
+    zoneE=$(echo $((t9AM - t6AM)))
+    zoneF=$(echo $((t12PM - t9AM)))
+    flowzoneA=$(echo $((zoneA / ZONETIMEA)))
+    flowzoneB=$(echo $((zoneB / ZONETIMEB)))
+    flowzoneC=$(echo $((zoneC / ZONETIMEC)))
+    flowzoneD=$(echo $((zoneD / ZONETIMED)))
+    flowzoneE=$(echo $((zoneE / ZONETIMEE)))
+    flowzoneF=$(echo $((zoneF / ZONETIMEF)))
+    echo "Zone A:$zoneA flowrate:$flowzoneA"
+    echo "Zone B:$zoneB flowrate:$flowzoneB"
+    echo "Zone C:$zoneC flowrate:$flowzoneC"
+    echo "Zone D:$zoneD flowrate:$flowzoneD"
+    echo "Zone E:$zoneE flowrate:$flowzoneE"
+    echo "Zone F:$zoneF flowrate:$flowzoneF"
+ 
   #calculate irrigation consumption for previous night done after 12 PM (adjusted for UTC)
   if [[ `date +%H` -ge 19 && `date +%H` -lt 20 ]];then
     t6PM=$(cat /data/bin6PM)
