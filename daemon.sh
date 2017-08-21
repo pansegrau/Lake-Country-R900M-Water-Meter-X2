@@ -160,7 +160,7 @@ while true; do
     zoneD=$(echo $((t6AM - t3AM)))
     zoneE=$(echo $((t9AM - t6AM)))
     zoneF=$(echo $((t12PM - t9AM)))
-    flowzoneA=$(echo $((zoneA / ZONETIMEA)))
+    flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/') 
     flowzoneB=$(echo $((zoneB / ZONETIMEB)))
     flowzoneC=$(echo $((zoneC / ZONETIMEC)))
     flowzoneD=$(echo $((zoneD / ZONETIMED)))
