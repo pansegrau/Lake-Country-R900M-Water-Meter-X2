@@ -2,8 +2,6 @@
 
 declare -i night
 declare -i day
-declare -i flowrate
-declare -i dayrate
 declare -i house
 declare -i housemidnight
 declare -i ZONETIMEA
@@ -132,7 +130,7 @@ while true; do
   # subtract irrigation meter from main pit meter
   house=$(echo $((pitint - irrint)))
   #convert to cubic meters
-  housemeter=$(echo $((house / 1000)))
+  housemeter=$(echo $((100 * house / 1000))| sed 's/..$/.&/')
   
   # record data for daily house consumption of House at 1 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 7 && `date +%H` -lt 8 ]];then
