@@ -96,18 +96,21 @@ while true; do
   if [[ `date +%H` -ge 6 && `date +%H` -lt 7 ]];then
     t12AM=$irrint
     echo $t12AM > /data/bin12AM
+    echo $t12AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 1 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 7 && `date +%H` -lt 8 ]];then
     echo "in 1AM the if statement"
     t1AM=$irrint
     echo $t1AM > /data/bin1AM
+    echo $t1AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 2 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 8 && `date +%H` -lt 9 ]];then
     echo "in 2AM the if statement"
     t2AM=$irrint
     echo $t2AM > /data/bin2AM
+    echo $t2AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 3 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 9 && `date +%H` -lt 10 ]];then
