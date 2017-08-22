@@ -115,12 +115,12 @@ while true; do
   # record data for nightly consumption of Irrigation meter at 11 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 5 && `date +%H` -lt 6 ]];then
     echo "in 11PM the if statement"
-    t10PM=$irrint
-    echo $t10PM > /data/bin10PM
+    t11PM=$irrint
+    echo $t11PM > /data/bin11PM
   fi
   # record data for nightly consumption of Irrigation meter at 12 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 6 && `date +%H` -lt 7 ]];then
-    echo "in 12PM the if statement"
+    echo "in 12AM the if statement"
     t12AM=$irrint
     echo $t12AM > /data/bin12AM
     echo $t12AM > /data/bin3AM
@@ -195,7 +195,7 @@ while true; do
   fi
   # record data for nightly consumption of Irrigation meter at 12 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 18 && `date +%H` -lt 19 ]];then
-    echo "in12AM the if statement"
+    echo "in12PM the if statement"
     t12PM=$irrint
     echo $t12PM > /data/bin12PM
   fi
@@ -227,7 +227,6 @@ while true; do
     echo $housemidnight > /data/binhousemidnight
   fi
   
- 
   #calculate irrigation consumption for previous night done after 12 PM (adjusted for UTC)
   if [[ `date +%H` -ge 19 && `date +%H` -lt 20 ]];then
     t6PM=$(cat /data/bin6PM)
@@ -361,4 +360,3 @@ while true; do
   # Let the watchdog know we've done another cycle
   touch updated.log
 done
-
