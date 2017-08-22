@@ -207,7 +207,6 @@ while true; do
   pitmeter=$consumption
   pit=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
   
-  #Now process data 
   #convert to integer
   pitint=${pit%.*}
   # subtract irrigation meter from main pit meter
@@ -217,43 +216,17 @@ while true; do
   
   # record data for daily house consumption of House at 1 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 7 && `date +%H` -lt 8 ]];then
-     echo $house > /data/binhouse1AM
+    echo $house > /data/binhouse1AM
   fi
   
   # record data for daily house consumption of House at 12 AM (time is adjusted due to UTC)
   # and then compute daily consumption
   if [[ `date +%H` -ge 6 && `date +%H` -lt 7 ]];then
-     house1AM=$(cat /data/binhouse1AM)
-     housemidnight=$(echo $((house - house1AM)))
-     echo $housemidnight > /data/binhousemidnight
+    house1AM=$(cat /data/binhouse1AM)
+    housemidnight=$(echo $((house - house1AM)))
+    echo $housemidnight > /data/binhousemidnight
   fi
-  #need timely updates for irrigation troubleshooting
-    echo "Timely updates for Irrigation trouble-shooting"
-    t6PM=$(cat /data/bin6PM)
-    t9PM=$(cat /data/bin9PM)
-    t12AM=$(cat /data/bin12AM)
-    t3AM=$(cat /data/bin3AM)
-    t6AM=$(cat /data/bin6AM)
-    t9AM=$(cat /data/bin9AM)
-    t12PM=$(cat /data/bin12PM)
-    zoneA=$(echo $((t9PM - t6PM)))
-    zoneB=$(echo $((t12AM - t9PM)))
-    zoneC=$(echo $((t3AM - t12AM)))
-    zoneD=$(echo $((t6AM - t3AM)))
-    zoneE=$(echo $((t9AM - t6AM)))
-    zoneF=$(echo $((t12PM - t9AM)))
-    flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/') 
-    flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
-    flowzoneC=$(echo $((100 * zoneC / ZONETIMEC))| sed 's/..$/.&/')
-    flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
-    flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
-    flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
-    echo "Zone A:$zoneA flowrate:$flowzoneA"
-    echo "Zone B:$zoneB flowrate:$flowzoneB"
-    echo "Zone C:$zoneC flowrate:$flowzoneC"
-    echo "Zone D:$zoneD flowrate:$flowzoneD"
-    echo "Zone E:$zoneE flowrate:$flowzoneE"
-    echo "Zone F:$zoneF flowrate:$flowzoneF"
+  
  
   #calculate irrigation consumption for previous night done after 12 PM (adjusted for UTC)
   if [[ `date +%H` -ge 19 && `date +%H` -lt 20 ]];then
@@ -303,6 +276,34 @@ while true; do
     echo $day > /data/binday
     echo $dayrate > /data/bindayrate
   fi
+  
+  #need timely updates for irrigation troubleshooting
+  echo "Timely updates for Irrigation trouble-shooting"
+  t6PM=$(cat /data/bin6PM)
+  t9PM=$(cat /data/bin9PM)
+  t12AM=$(cat /data/bin12AM)
+  t3AM=$(cat /data/bin3AM)
+  t6AM=$(cat /data/bin6AM)
+  t9AM=$(cat /data/bin9AM)
+  t12PM=$(cat /data/bin12PM)
+  zoneA=$(echo $((t9PM - t6PM)))
+  zoneB=$(echo $((t12AM - t9PM)))
+  zoneC=$(echo $((t3AM - t12AM)))
+  zoneD=$(echo $((t6AM - t3AM)))
+  zoneE=$(echo $((t9AM - t6AM)))
+  zoneF=$(echo $((t12PM - t9AM)))
+  flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/') 
+  flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
+  flowzoneC=$(echo $((100 * zoneC / ZONETIMEC))| sed 's/..$/.&/')
+  flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
+  flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
+  flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
+  echo "Zone A:$zoneA flowrate:$flowzoneA"    
+  echo "Zone B:$zoneB flowrate:$flowzoneB"
+  echo "Zone C:$zoneC flowrate:$flowzoneC"
+  echo "Zone D:$zoneD flowrate:$flowzoneD"
+  echo "Zone E:$zoneE flowrate:$flowzoneE"
+  echo "Zone F:$zoneF flowrate:$flowzoneF"
   
   # recall data from disk as program may have rebooted
   housemidnight=$(cat /data/binhousemidnight)
