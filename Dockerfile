@@ -14,7 +14,7 @@ RUN mkdir /go
 ENV GOPATH /go
 ENV PATH /usr/local/go/bin:/go/bin:$PATH
 
-RUN go get github.com/pansegrau/rtlamr
+RUN go get github.com/bemasher/rtlamr
 RUN go get github.com/mdp/go-statx/...
 
 RUN mkdir /app
