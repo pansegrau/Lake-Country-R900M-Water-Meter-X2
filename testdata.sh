@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 t6PM=$(cat /data/bin6PM)
 t7PM=$(cat /data/bin7PM)
