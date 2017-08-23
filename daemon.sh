@@ -402,7 +402,7 @@ while true; do
   f11PM=$(echo $((100 * q11PM / 60))| sed 's/..$/.&/')
   f12AM=$(echo $((100 * q12AM / 60))| sed 's/..$/.&/')
   echo "------------------------------------------------------------------------------"
-  echo "Quantity and the average flow-rate each each hour"
+  echo "Quantity and the Approximate Average Flow-rate each hour"
   echo "1 AM  :$q1AM litres,     :$f1AM litres per min"    
   echo "2 AM  :$q2AM litres,     :$f2AM litres per min" 
   echo "3 AM  :$q3AM litres,     :$f3AM litres per min" 
