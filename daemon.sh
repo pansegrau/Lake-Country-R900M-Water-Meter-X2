@@ -133,14 +133,14 @@ while true; do
     echo $t1AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 2 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 8 && `date +%H` -lt 9 ]];then
+  if [[ `date +%H` -ge 08 && `date +%H` -lt 09 ]];then
     echo "in 2AM the if statement"
     t2AM=$irrint
     echo $t2AM > /data/bin2AM
     echo $t2AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 3 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 9 && `date +%H` -lt 10 ]];then
+  if [[ `date +%H` -ge 09 && `date +%H` -lt 10 ]];then
     echo "in 3AM the if statement"
     t3AM=$irrint
     echo $t3AM > /data/bin3AM
