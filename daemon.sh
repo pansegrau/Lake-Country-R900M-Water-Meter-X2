@@ -10,6 +10,8 @@ declare -i ZONETIMEC
 declare -i ZONETIMED
 declare -i ZONETIMEE
 declare -i ZONETIMEF
+declare -i ZONETIMEG
+declare -i ZONETIMEH
 
 if [ -z "$METERID" ]; then
   echo "METERID not set, launching in debug mode"
@@ -57,6 +59,18 @@ fi
 if [ -z "$ZONETIMEF" ]; then
   echo "ZONETIMEF not set, launching in debug mode"
   echo "Enter Environment variable ZONETIMEF with an integer (use 180 or flow time setting on auto valve)"
+  rtl_tcp
+  exit 0
+fi
+if [ -z "$ZONETIMEG" ]; then
+  echo "ZONETIMEG not set, launching in debug mode"
+  echo "Enter Environment variable ZONETIMEG with an integer (use 180 or flow time setting on auto valve)"
+  rtl_tcp
+  exit 0
+fi
+if [ -z "$ZONETIMEH" ]; then
+  echo "ZONETIMEH not set, launching in debug mode"
+  echo "Enter Environment variable ZONETIMEH with an integer (use 180 or flow time setting on auto valve)"
   rtl_tcp
   exit 0
 fi
@@ -263,6 +277,7 @@ while true; do
     t6AM=$(cat /data/bin6AM)
     t9AM=$(cat /data/bin9AM)
     t12PM=$(cat /data/bin12PM)
+    t3PM=$(cat /data/bin3PM)
     night=$(echo $((t9AM - t9PM)))
     zoneA=$(echo $((t9PM - t6PM)))
     zoneB=$(echo $((t12AM - t9PM)))
@@ -270,6 +285,8 @@ while true; do
     zoneD=$(echo $((t6AM - t3AM)))
     zoneE=$(echo $((t9AM - t6AM)))
     zoneF=$(echo $((t12PM - t9AM)))
+    zoneG=$(echo $((t3PM - t12PM)))
+    zoneH=$(echo $((t6PM - t3PM)))
     flowrate=$(echo $((100 * night / 720))| sed 's/..$/.&/')
     flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/')
     flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
@@ -277,6 +294,8 @@ while true; do
     flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
     flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
     flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
+    flowzoneG=$(echo $((100 * zoneE / ZONETIMEG))| sed 's/..$/.&/')
+    flowzoneH=$(echo $((100 * zoneF / ZONETIMEH))| sed 's/..$/.&/')
     echo $night > /data/binnight
     echo $zoneA > /data/binzoneA
     echo $zoneB > /data/binzoneB
@@ -284,6 +303,8 @@ while true; do
     echo $zoneD > /data/binzoneD
     echo $zoneE > /data/binzoneE
     echo $zoneF > /data/binzoneF
+    echo $zoneG > /data/binzoneG
+    echo $zoneH > /data/binzoneH
     echo $flowrate > /data/binflowrate
     echo $flowzoneA > /data/binflowzoneA
     echo $flowzoneB > /data/binflowzoneB
@@ -291,6 +312,8 @@ while true; do
     echo $flowzoneD > /data/binflowzoneD
     echo $flowzoneE > /data/binflowzoneE
     echo $flowzoneF > /data/binflowzoneF
+    echo $flowzoneG > /data/binflowzoneG
+    echo $flowzoneH > /data/binflowzoneH
   fi
   
   #calculate irrigation consumption for previous day performed after 9 PM (adjusted for UTC)
@@ -305,6 +328,7 @@ while true; do
   
   #need timely updates for irrigation troubleshooting
   echo "Timely updates for Irrigation trouble-shooting"
+  t3PM=$(cat /data/bin3PM)
   t6PM=$(cat /data/bin6PM)
   t9PM=$(cat /data/bin9PM)
   t12AM=$(cat /data/bin12AM)
@@ -318,18 +342,24 @@ while true; do
   zoneD=$(echo $((t6AM - t3AM)))
   zoneE=$(echo $((t9AM - t6AM)))
   zoneF=$(echo $((t12PM - t9AM)))
+  zoneG=$(echo $((t3PM - t12PM)))
+  zoneH=$(echo $((t6PM - t3PM)))
   flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/') 
   flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
   flowzoneC=$(echo $((100 * zoneC / ZONETIMEC))| sed 's/..$/.&/')
   flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
   flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
   flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
-  echo "Zone A:$zoneA flowrate:$flowzoneA"    
-  echo "Zone B:$zoneB flowrate:$flowzoneB"
-  echo "Zone C:$zoneC flowrate:$flowzoneC"
-  echo "Zone D:$zoneD flowrate:$flowzoneD"
-  echo "Zone E:$zoneE flowrate:$flowzoneE"
-  echo "Zone F:$zoneF flowrate:$flowzoneF"
+  flowzoneG=$(echo $((100 * zoneG / ZONETIMEG))| sed 's/..$/.&/')
+  flowzoneH=$(echo $((100 * zoneH / ZONETIMEH))| sed 's/..$/.&/')
+  echo "Zone A (6 PM - 9PM)     :$zoneA flowrate:$flowzoneA"    
+  echo "Zone B (9 PM - Midnight):$zoneB flowrate:$flowzoneB"
+  echo "Zone C (Midnight - 3 AM):$zoneC flowrate:$flowzoneC"
+  echo "Zone D (3 AM - 6 AM)    :$zoneD flowrate:$flowzoneD"
+  echo "Zone E (6 AM - 9 AM)    :$zoneE flowrate:$flowzoneE"
+  echo "Zone F (9 AM - Noon)    :$zoneF flowrate:$flowzoneF"
+  echo "Zone G (Noon - 3 PM)    :$zoneG flowrate:$flowzoneG"
+  echo "Zone H (3 PM - 6 PM)    :$zoneH flowrate:$flowzoneH"
   
   # recall data from disk as program may have rebooted
   housemidnight=$(cat /data/binhousemidnight)
@@ -342,6 +372,8 @@ while true; do
   zoneD=$(cat /data/binzoneD)
   zoneE=$(cat /data/binzoneE)
   zoneF=$(cat /data/binzoneF)
+  zoneG=$(cat /data/binzoneG)
+  zoneH=$(cat /data/binzoneH)
   flowrate=$(cat /data/binflowrate)
   flowzoneA=$(cat /data/binflowzoneA)
   flowzoneB=$(cat /data/binflowzoneB)
@@ -349,6 +381,8 @@ while true; do
   flowzoneD=$(cat /data/binflowzoneD)
   flowzoneE=$(cat /data/binflowzoneE)
   flowzoneF=$(cat /data/binflowzoneF)
+  flowzoneG=$(cat /data/binflowzoneG)
+  flowzoneH=$(cat /data/binflowzoneH)
   day=$(cat /data/binday)
   dayrate=$(cat /data/bindayrate)
   
@@ -361,6 +395,8 @@ while true; do
   echo "Irrigation Consumption 3AM to 6AM PDT was  Zone D: $zoneD Litres : $flowzoneD Litres per min"
   echo "Irrigation Consumption 6AM to 9AM PDT was  Zone E: $zoneE Litres : $flowzoneE Litres per min"
   echo "Irrigation Consumption 9AM to 12PM PDT was Zone F: $zoneF Litres : $flowzoneF Litres per min"
+  echo "Irrigation Consumption 12PM to 3PM PDT was Zone F: $zoneG Litres : $flowzoneG Litres per min"
+  echo "Irrigation Consumption 3PM to 6PM PDT was  Zone F: $zoneH Litres : $flowzoneH Litres per min"
   echo "Daily Consumption Data in Litres --------------------------------------------------"
   echo "Total Consumption of Irrigation meter at 9 PM (PDT)    : $t9PM Litres"
   echo "Total Consumption of Irrigation meter at 9 AM (PDT)    : $t9AM Litres"
