@@ -1,15 +1,17 @@
 # Raspberry Pi tracker for two Neptune R900M smart water meters.
 
 ### Goals
-- A Raspberry Pi and a RTL-SDR to track my smart water meter
+- A Raspberry Pi and a RTL-SDR to track a farmer's smart water meters
+- The program reports consumption and flow information about the domestic and irrigation system by comparing instances of consumption over time.  By knowing which hours the zone valves are open, the farmer is better able to follow how each of his zones are acting throughout the day.  It also tracks house consumption for billing purposes.
 - Docker to simplify the installation and setup of RTLAMR
-- Resin.io to deploy this docker container to the Raspberry Pi in my house
-- Since I have two meters in series with deductive billing, I deduct the consumption of the second meter from the consumption of the main meter.
+- Resin.io to deploy this docker container to the Raspberry Pi at the farm.
+- Since the two meters are in series with deductive billing, the consumption of the irrigation meter is deducted from the consumption of the principal meter.
 - Be aware the R900M does not transmit rate of flow information in its FM radio signal. My original intention was to track the rate of flow (that can be read on the digital display of the meter) on my cell phone to know if my drip irrigartion system is functioning correctly.
+ 
 
 ## Credit
 
-- I copied everything from Atlanta Water Meter (https://github.com/mdp/AtlantaWaterMeter) and modified the daemon.sh file to fit my two meter deductive billing situation here in Lake Country Canada.  I also changed the units from Cubic Feet to Cubic Meters as Lake Country uses the Neptune R900M meters which measure consumption in metric.
+- I copied the program from Atlanta Water Meter (https://github.com/mdp/AtlantaWaterMeter) and then modified the daemon.sh file to fit my two meter deductive billing situation on my farm here in Lake Country Canada.  I also changed the units from Cubic Feet to Cubic Meters as Lake Country uses the Neptune R900M meters which measure consumption in metric.
 - @besmasher - Built the excellent [RTLAMR](https://github.com/bemasher/rtlamr) library which actually does all the work of reading the meters.
 - [Frederik Granna's](https://bitbucket.org/fgranna/) docker base for setting up RTL-SDR on the Raspberry Pi
 
@@ -30,7 +32,7 @@
 - SSH into your Raspberry Pi via Resin and start 'rtlamr' to find water meters in your area
 - Once you find your Irrigation meter, enter it as an environment variable in the Resin dashboard under "METERID"
 - Once you find your Main meter, enter it as an environment variable in the Resin dashboard under "METERID2"
-- Enter four separate environment variables (ZONETIMEA, ZONETIMEB, ZONETIMEC, ZONETIMED, ZONETIMEE, ZONETIMEF) to 180.  Or set them to the flowtime (<180) for each control valve to output a correct flowrate calculation.
+- Enter four separate environment variables (ZONETIMEA, ZONETIMEB, ZONETIMEC, ZONETIMED, ZONETIMEE, ZONETIMEG, ZONETIMEH, ZONETIMEF) to 180.  Or set them to the flowtime (<180) for each control valve to output a correct flowrate calculation.
 - For the very first installation the program needs to run for 24 hours to obtain correct output data.
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 ## Sample Output
