@@ -82,6 +82,36 @@ while true; do
   #convert to integer
   irrint=${irr%.*}
   
+  # record data for nightly consumption of Irrigation meter at 1 PM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 19 && `date +%H` -lt 20 ]];then
+    echo "in 1PM the if statement"
+    t1PM=$irrint
+    echo $t1PM > /data/bin1PM
+  fi
+  # record data for nightly consumption of Irrigation meter at 2 PM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 20 && `date +%H` -lt 21 ]];then
+    echo "in 6PM the if statement"
+    t2PM=$irrint
+    echo $t2PM > /data/bin2PM
+  fi
+  # record data for nightly consumption of Irrigation meter at 3 PM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 21 && `date +%H` -lt 22 ]];then
+    echo "in 6PM the if statement"
+    t3PM=$irrint
+    echo $t3PM > /data/bin3PM
+  fi
+  # record data for nightly consumption of Irrigation meter at 4 PM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 22 && `date +%H` -lt 23 ]];then
+    echo "in 6PM the if statement"
+    t4PM=$irrint
+    echo $t4PM > /data/bin4PM
+  fi
+  # record data for nightly consumption of Irrigation meter at 5 PM (time is adjusted due to UTC)
+  if [[ `date +%H` -ge 23 && `date +%H` -lt 0 ]];then
+    echo "in 6PM the if statement"
+    t5PM=$irrint
+    echo $t5PM > /data/bin5PM
+  fi
   # record data for nightly consumption of Irrigation meter at 6 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 0 && `date +%H` -lt 1 ]];then
     echo "in 6PM the if statement"
@@ -123,24 +153,21 @@ while true; do
     echo "in 12AM the if statement"
     t12AM=$irrint
     echo $t12AM > /data/bin12AM
-    echo $t12AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 1 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 7 && `date +%H` -lt 8 ]];then
+  if [[ `date +%-H` -ge 7 && `date +%-H` -lt 8 ]];then
     echo "in 1AM the if statement"
     t1AM=$irrint
     echo $t1AM > /data/bin1AM
-    echo $t1AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 2 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 08 && `date +%H` -lt 09 ]];then
+  if [[ `date +%-H` -ge 8 && `date +%-H` -lt 9 ]];then
     echo "in 2AM the if statement"
     t2AM=$irrint
     echo $t2AM > /data/bin2AM
-    echo $t2AM > /data/bin3AM
   fi
   # record data for nightly consumption of Irrigation meter at 3 AM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 09 && `date +%H` -lt 10 ]];then
+  if [[ `date +%-H` -ge 9 && `date +%-H` -lt 10 ]];then
     echo "in 3AM the if statement"
     t3AM=$irrint
     echo $t3AM > /data/bin3AM
