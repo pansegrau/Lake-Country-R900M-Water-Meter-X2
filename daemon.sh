@@ -90,25 +90,25 @@ while true; do
   fi
   # record data for nightly consumption of Irrigation meter at 2 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 20 && `date +%H` -lt 21 ]];then
-    echo "in 6PM the if statement"
+    echo "in 2PM the if statement"
     t2PM=$irrint
     echo $t2PM > /data/bin2PM
   fi
   # record data for nightly consumption of Irrigation meter at 3 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 21 && `date +%H` -lt 22 ]];then
-    echo "in 6PM the if statement"
+    echo "in 3PM the if statement"
     t3PM=$irrint
     echo $t3PM > /data/bin3PM
   fi
   # record data for nightly consumption of Irrigation meter at 4 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 22 && `date +%H` -lt 23 ]];then
-    echo "in 6PM the if statement"
+    echo "in 4PM the if statement"
     t4PM=$irrint
     echo $t4PM > /data/bin4PM
   fi
   # record data for nightly consumption of Irrigation meter at 5 PM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 23 && `date +%H` -lt 0 ]];then
-    echo "in 6PM the if statement"
+    echo "in 5PM the if statement"
     t5PM=$irrint
     echo $t5PM > /data/bin5PM
   fi
