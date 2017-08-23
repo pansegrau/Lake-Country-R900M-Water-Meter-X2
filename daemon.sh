@@ -328,38 +328,105 @@ while true; do
   
   #need timely updates for irrigation troubleshooting
   echo "Timely updates for Irrigation trouble-shooting"
+  t1PM=$(cat /data/bin1PM)
+  t2PM=$(cat /data/bin2PM)
   t3PM=$(cat /data/bin3PM)
+  t4PM=$(cat /data/bin4PM)
+  t5PM=$(cat /data/bin5PM)
   t6PM=$(cat /data/bin6PM)
+  t7PM=$(cat /data/bin7PM)
+  t8PM=$(cat /data/bin8PM)
   t9PM=$(cat /data/bin9PM)
+  t10PM=$(cat /data/bin10PM)
+  t11PM=$(cat /data/bin11PM)
   t12AM=$(cat /data/bin12AM)
+  t1AM=$(cat /data/bin1AM)
+  t2AM=$(cat /data/bin2AM)
   t3AM=$(cat /data/bin3AM)
+  t4AM=$(cat /data/bin4AM)
+  t5AM=$(cat /data/bin5AM)
   t6AM=$(cat /data/bin6AM)
+  t7AM=$(cat /data/bin7AM)
+  t8AM=$(cat /data/bin8AM)
   t9AM=$(cat /data/bin9AM)
+  t10AM=$(cat /data/bin10AM)
+  t11AM=$(cat /data/bin11AM)
   t12PM=$(cat /data/bin12PM)
-  zoneA=$(echo $((t9PM - t6PM)))
-  zoneB=$(echo $((t12AM - t9PM)))
-  zoneC=$(echo $((t3AM - t12AM)))
-  zoneD=$(echo $((t6AM - t3AM)))
-  zoneE=$(echo $((t9AM - t6AM)))
-  zoneF=$(echo $((t12PM - t9AM)))
-  zoneG=$(echo $((t3PM - t12PM)))
-  zoneH=$(echo $((t6PM - t3PM)))
-  flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/') 
-  flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
-  flowzoneC=$(echo $((100 * zoneC / ZONETIMEC))| sed 's/..$/.&/')
-  flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
-  flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
-  flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
-  flowzoneG=$(echo $((100 * zoneG / ZONETIMEG))| sed 's/..$/.&/')
-  flowzoneH=$(echo $((100 * zoneH / ZONETIMEH))| sed 's/..$/.&/')
-  echo "Zone A (6 PM - 9PM)     :$zoneA flowrate:$flowzoneA"    
-  echo "Zone B (9 PM - Midnight):$zoneB flowrate:$flowzoneB"
-  echo "Zone C (Midnight - 3 AM):$zoneC flowrate:$flowzoneC"
-  echo "Zone D (3 AM - 6 AM)    :$zoneD flowrate:$flowzoneD"
-  echo "Zone E (6 AM - 9 AM)    :$zoneE flowrate:$flowzoneE"
-  echo "Zone F (9 AM - Noon)    :$zoneF flowrate:$flowzoneF"
-  echo "Zone G (Noon - 3 PM)    :$zoneG flowrate:$flowzoneG"
-  echo "Zone H (3 PM - 6 PM)    :$zoneH flowrate:$flowzoneH"
+  q1AM=$(echo $((t1AM - t12AM)))
+  q2AM=$(echo $((t2AM - t1AM)))
+  q3AM=$(echo $((t3AM - t2AM)))
+  q4AM=$(echo $((t4AM - t3AM)))
+  q5AM=$(echo $((t5AM - t4AM)))
+  q6AM=$(echo $((t6AM - t5AM)))
+  q7AM=$(echo $((t7AM - t6AM)))
+  q8AM=$(echo $((t8AM - t7AM)))
+  q9AM=$(echo $((t9AM - t8AM)))
+  q10AM=$(echo $((t10AM - t9AM)))
+  q11AM=$(echo $((t11AM - t10AM)))
+  q12PM=$(echo $((t12PM - t11AM)))
+  q1PM=$(echo $((t1PM - t12PM)))
+  q2PM=$(echo $((t2PM - t1PM)))
+  q3PM=$(echo $((t3PM - t2PM)))
+  q4PM=$(echo $((t4PM - t3PM)))
+  q5PM=$(echo $((t5PM - t4PM)))
+  q6PM=$(echo $((t6PM - t5PM)))
+  q7PM=$(echo $((t7PM - t6PM)))
+  q8PM=$(echo $((t8PM - t7PM)))
+  q9PM=$(echo $((t9PM - t8PM)))
+  q10PM=$(echo $((t10PM - t9PM)))
+  q11PM=$(echo $((t11PM - t10PM)))
+  q12AM=$(echo $((t12AM - t11PM)))
+  
+  f1AM=$(echo $((100 * q1AM / 60))| sed 's/..$/.&/')
+  f2AM=$(echo $((100 * q2AM / 60))| sed 's/..$/.&/')
+  f3AM=$(echo $((100 * q3AM / 60))| sed 's/..$/.&/')
+  f4AM=$(echo $((100 * q4AM / 60))| sed 's/..$/.&/')
+  f5AM=$(echo $((100 * q5AM / 60))| sed 's/..$/.&/')
+  f6AM=$(echo $((100 * q6AM / 60))| sed 's/..$/.&/')
+  f7AM=$(echo $((100 * q7AM / 60))| sed 's/..$/.&/')
+  f8AM=$(echo $((100 * q8AM / 60))| sed 's/..$/.&/')
+  f9AM=$(echo $((100 * q9AM / 60))| sed 's/..$/.&/')
+  f10AM=$(echo $((100 * q10AM / 60))| sed 's/..$/.&/')
+  f11AM=$(echo $((100 * q11AM / 60))| sed 's/..$/.&/')
+  f12PM=$(echo $((100 * q12PM / 60))| sed 's/..$/.&/')
+  f1PM=$(echo $((100 * q1PM / 60))| sed 's/..$/.&/')
+  f2PM=$(echo $((100 * q2PM / 60))| sed 's/..$/.&/')
+  f3PM=$(echo $((100 * q3PM / 60))| sed 's/..$/.&/')
+  f4PM=$(echo $((100 * q4PM / 60))| sed 's/..$/.&/')
+  f5PM=$(echo $((100 * q5PM / 60))| sed 's/..$/.&/')
+  f6PM=$(echo $((100 * q6PM / 60))| sed 's/..$/.&/')
+  f7PM=$(echo $((100 * q7PM / 60))| sed 's/..$/.&/')
+  f8PM=$(echo $((100 * q8PM / 60))| sed 's/..$/.&/')
+  f9PM=$(echo $((100 * q9PM / 60))| sed 's/..$/.&/')
+  f10PM=$(echo $((100 * q10PM / 60))| sed 's/..$/.&/')
+  f11PM=$(echo $((100 * q11PM / 60))| sed 's/..$/.&/')
+  f12AM=$(echo $((100 * q12AM / 60))| sed 's/..$/.&/')
+  echo "------------------------------------------------------------------------------"
+  echo "Quantity and the average flow-rate each each hour"
+  echo "1 AM :$q1AM litres, flow:$f1AM litres per min"    
+  echo "2 AM :$q2AM litres, flow:$f2AM litres per min" 
+  echo "3 AM :$q3AM litres, flow:$f3AM litres per min" 
+  echo "4 AM :$q4AM litres, flow:$f4AM litres per min" 
+  echo "5 AM :$q5AM litres, flow:$f5AM litres per min" 
+  echo "6 AM :$q6AM litres, flow:$f6AM litres per min" 
+  echo "7 AM :$q7AM litres, flow:$f7AM litres per min" 
+  echo "8 AM :$q8AM litres, flow:$f8AM litres per min" 
+  echo "9 AM :$q9AM litres, flow:$f9AM litres per min" 
+  echo "10 AM :$q10AM litres, flow:$f10AM litres per min" 
+  echo "11 AM :$q11AM litres, flow:$f11AM litres per min"
+  echo "12 PM :$q12PM litres, flow:$f12PM litres per min"
+  echo "1 PM :$q1PM litres, flow:$f1PM litres per min"
+  echo "2 PM :$q2PM litres, flow:$f2PM litres per min"
+  echo "3 PM :$q3PM litres, flow:$f3PM litres per min"
+  echo "4 PM :$q4PM litres, flow:$f4PM litres per min"
+  echo "5 PM :$q5PM litres, flow:$f5PM litres per min"
+  echo "6 PM :$q6PM litres, flow:$f6PM litres per min"
+  echo "7 PM :$q7PM litres, flow:$f7PM litres per min"
+  echo "8 PM :$q8PM litres, flow:$f8PM litres per min"
+  echo "9 PM :$q9PM litres, flow:$f9PM litres per min"
+  echo "10 PM :$q10PM litres, flow:$f10PM litres per min"
+  echo "11 PM :$q11PM litres, flow:$f11PM litres per min"
+  echo "12 AM :$q12AM litres, flow:$f12AM litres per min"
   
   # recall data from disk as program may have rebooted
   housemidnight=$(cat /data/binhousemidnight)
