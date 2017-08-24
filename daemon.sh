@@ -88,6 +88,7 @@ while true; do
   
   #Collect data from Irrigation meter
   consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
+  echo "-----------------------------------------------------------------------------------------------"
   echo "Consumption Irrigation Meter: $consumption Cubic Meters"
   irrmeter=$consumption
   irr=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
@@ -240,6 +241,7 @@ while true; do
     t12PM=$irrint
     echo $t12PM > /data/bin12PM
   fi
+  echo "-----------------------------------------------------------------------------------------------"
   
   #Collect data from Pit meter
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
