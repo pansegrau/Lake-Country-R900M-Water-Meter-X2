@@ -327,7 +327,7 @@ while true; do
     echo $day > /data/binday
     echo $dayrate > /data/bindayrate
   fi
-  
+  echo "------------------------------------------------------------------------------"
   #need timely updates for irrigation troubleshooting
   echo "Hourly updates for Irrigation trouble-shooting"
   t1PM=$(cat /data/bin1PM)
@@ -403,8 +403,9 @@ while true; do
   f10PM=$(echo $((100 * q10PM / 60))| sed 's/..$/.&/')
   f11PM=$(echo $((100 * q11PM / 60))| sed 's/..$/.&/')
   f12AM=$(echo $((100 * q12AM / 60))| sed 's/..$/.&/')
-  echo "------------------------------------------------------------------------------"
+  
   echo "Quantity and the Approximate Average Flow-Rate each hour"
+  echo "_______________________________________________________________"
   echo "1 AM  :$q1AM     litres,     :$f1AM litres per min"    
   echo "2 AM  :$q2AM     litres,     :$f2AM litres per min" 
   echo "3 AM  :$q3AM     litres,     :$f3AM litres per min" 
