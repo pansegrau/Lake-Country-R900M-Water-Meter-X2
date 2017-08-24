@@ -476,10 +476,10 @@ while true; do
   echo "Average Irrigation rate of flow yesterday  (9AM to 9PM): $dayrate  Litres per min"
   echo "House Consumption for the previous calandar day        : $housemidnight Litres"
   echo "********************************************************************************************"
-  echo "Total Consumption Data in Cubic Meters"
-  echo "Consumption Pit Meter                                  : $pitmeter Cubic Meters"
-  echo "Consumption Irrigation                                 : $irrmeter Cubic Meters"
-  echo "Consumption Non-Irrigation                             : $housemeter Cubic Meters"
+  echo "*                Total Consumption Data in Cubic Meters"
+  echo "*    Consumption Pit Meter                          : $pitmeter Cubic Meters"
+  echo "*    Consumption Irrigation                         : $irrmeter Cubic Meters"
+  echo "*    Consumption Non-Irrigation                     : $housemeter Cubic Meters"
   echo "********************************************************************************************"
  
   # Replace with your custom logging code
