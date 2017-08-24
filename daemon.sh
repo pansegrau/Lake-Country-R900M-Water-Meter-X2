@@ -88,7 +88,7 @@ while true; do
   
   #Collect data from Irrigation meter
   consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
-  echo "-----------------------------------------------------------------------------------------------"
+  echo "-----------------------------------------------------------------------------------------------------"
   echo "Consumption Irrigation Meter: $consumption Cubic Meters"
   irrmeter=$consumption
   irr=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
@@ -241,7 +241,7 @@ while true; do
     t12PM=$irrint
     echo $t12PM > /data/bin12PM
   fi
-  echo "-----------------------------------------------------------------------------------------------"
+  echo "---------------------------------------------------------------------------------------------------"
   
   #Collect data from Pit meter
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
@@ -327,7 +327,7 @@ while true; do
     echo $day > /data/binday
     echo $dayrate > /data/bindayrate
   fi
-  echo "------------------------------------------------------------------------------"
+  echo "-----------------------------------------------------------------------------------------------"
   #need timely updates for irrigation troubleshooting
   echo "Hourly updates for Irrigation trouble-shooting"
   t1PM=$(cat /data/bin1PM)
@@ -405,7 +405,7 @@ while true; do
   f12AM=$(echo $((100 * q12AM / 60))| sed 's/..$/.&/')
   
   echo "Quantity and the Approximate Average Flow-Rate each hour"
-  echo "_______________________________________________________________"
+  echo "___________________________________________________________________________________________"
   echo "1 AM  :$q1AM     litres,     :$f1AM litres per min"    
   echo "2 AM  :$q2AM     litres,     :$f2AM litres per min" 
   echo "3 AM  :$q3AM     litres,     :$f3AM litres per min" 
@@ -457,7 +457,7 @@ while true; do
   dayrate=$(cat /data/bindayrate)
   
   #display the information in resin log
-  echo " ----------------------------------------------------------------------------------"
+  echo " -------------------------------------------------------------------------------------------"
   echo "It is presently the "`date +%H`"th hour (UTC) of the day"
   echo "Irrigation Consumption 6PM to 9PM PDT was  Zone A: $zoneA Litres : $flowzoneA Litres per min"
   echo "Irrigation Consumption 9PM to 12AM PDT was Zone B: $zoneB Litres : $flowzoneB Litres per min"
@@ -467,7 +467,7 @@ while true; do
   echo "Irrigation Consumption 9AM to 12PM PDT was Zone F: $zoneF Litres : $flowzoneF Litres per min"
   echo "Irrigation Consumption 12PM to 3PM PDT was Zone F: $zoneG Litres : $flowzoneG Litres per min"
   echo "Irrigation Consumption 3PM to 6PM PDT was  Zone F: $zoneH Litres : $flowzoneH Litres per min"
-  echo "Daily Consumption Data in Litres --------------------------------------------------"
+  echo "Daily Consumption Data in Litres -----------------------------------------------------------"
   echo "Total Consumption of Irrigation meter at 9 PM (PDT)    : $t9PM  Litres"
   echo "Total Consumption of Irrigation meter at 9 AM (PDT)    : $t9AM  Litres"
   echo "Irrigation Consumption last night (9PM to 9AM PDT)     : $night Litres"
@@ -475,11 +475,12 @@ while true; do
   echo "Average Irrigation rate of flow last night (9PM to 9AM): $flowrate Litres per min"
   echo "Average Irrigation rate of flow yesterday  (9AM to 9PM): $dayrate  Litres per min"
   echo "House Consumption for the previous calandar day        : $housemidnight Litres"
-  echo "Total Consumption Data in Cubic Meters ---------------------------------------------"
+  echo "********************************************************************************************"
+  echo "Total Consumption Data in Cubic Meters"
   echo "Consumption Pit Meter                                  : $pitmeter Cubic Meters"
   echo "Consumption Irrigation                                 : $irrmeter Cubic Meters"
   echo "Consumption Non-Irrigation                             : $housemeter Cubic Meters"
-  echo " -----------------------------------------------------------------------------------"
+  echo "********************************************************************************************"
  
   # Replace with your custom logging code
   if [ ! -z "$STATX_APIKEY" ]; then
