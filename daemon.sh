@@ -121,13 +121,13 @@ while true; do
     echo $t4PM > /data/bin4PM
   fi
   # record data for nightly consumption of Irrigation meter at 5 PM (time is adjusted due to UTC)
-  if [[ `date +%H` -ge 23 && `date +%H` -lt 0 ]];then
+  if [[ `date +%H` -ge 23 && `date +%H` -lt 24 ]];then
     echo "in the 5PM if statement"
     t5PM=$irrint
     echo $t5PM > /data/bin5PM
   fi
   # record data for nightly consumption of Irrigation meter at 6 PM (time is adjusted due to UTC)
-  if [[ `date +%-H` -ge 0 && `date +%-H` -lt 1 ]];then
+  if [[ `date +%H` -ge 0 && `date +%H` -lt 1 ]];then
     echo "in the 6PM if statement"
     t6PM=$irrint
     echo $t6PM > /data/bin6PM
@@ -412,9 +412,9 @@ while true; do
   echo "7 AM  :$q7AM     litres,     :$f7AM litres per min" 
   echo "8 AM  :$q8AM     litres,     :$f8AM litres per min" 
   echo "9 AM  :$q9AM     litres,     :$f9AM litres per min" 
-  echo "10 AM :$q10AM    litres,    :$f10AM litres per min" 
-  echo "11 AM :$q11AM    litres,    :$f11AM litres per min"
-  echo "12 PM :$q12PM    litres,    :$f12PM litres per min"
+  echo "10 AM  :$q10AM    litres,     :$f10AM litres per min" 
+  echo "11 AM  :$q11AM    litres,     :$f11AM litres per min"
+  echo "12 PM  :$q12PM    litres,     :$f12PM litres per min"
   echo "1 PM  :$q1PM     litres,     :$f1PM litres per min"
   echo "2 PM  :$q2PM     litres,     :$f2PM litres per min"
   echo "3 PM  :$q3PM     litres,     :$f3PM litres per min"
@@ -424,9 +424,9 @@ while true; do
   echo "7 PM  :$q7PM     litres,     :$f7PM litres per min"
   echo "8 PM  :$q8PM     litres,     :$f8PM litres per min"
   echo "9 PM  :$q9PM     litres,     :$f9PM litres per min"
-  echo "10 PM :$q10PM    litres,    :$f10PM litres per min"
-  echo "11 PM :$q11PM    litres,    :$f11PM litres per min"
-  echo "12 AM :$q12AM    litres,    :$f12AM litres per min"
+  echo "10 PM  :$q10PM    litres,     :$f10PM litres per min"
+  echo "11 PM  :$q11PM    litres,     :$f11PM litres per min"
+  echo "12 AM  :$q12AM    litres,     :$f12AM litres per min"
   
   # recall data from disk as program may have rebooted
   housemidnight=$(cat /data/binhousemidnight)
