@@ -327,7 +327,7 @@ while true; do
     echo $day > /data/binday
     echo $dayrate > /data/bindayrate
   fi
-  echo "-----------------------------------------------------------------------------------------------"
+  echo "____________________________________________________________________________________________"
   #need timely updates for irrigation troubleshooting
   echo "Hourly updates for Irrigation trouble-shooting"
   t1PM=$(cat /data/bin1PM)
