@@ -232,7 +232,7 @@ while true; do
   # record data for nightly consumption of Irrigation meter at 11 AM (time is adjusted due to UTC)
   if [[ `date +%H` -ge 17 && `date +%H` -lt 18 ]];then
     echo "Presently processing 10 AM to 11 AM"
-    11AM=$irrint
+    t11AM=$irrint
     echo $t11AM > /data/bin11AM
   fi
   # record data for nightly consumption of Irrigation meter at 12 PM (time is adjusted due to UTC)
