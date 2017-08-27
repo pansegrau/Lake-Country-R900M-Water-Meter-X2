@@ -37,17 +37,26 @@
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 ## Sample Output
 
-7.08.17 06:44:46 (-0700) Hourly updates for Irrigation trouble-shooting
-27.08.17 06:44:47 (-0700) Quantity and the Approximate Average Flow-Rate each hour
-
-27.08.17 06:44:47 (-0700) 1 AM  0     litres,     0 litres per min
-27.08.17 06:44:47 (-0700) 2 AM  0     litres,     0 litres per min
-27.08.17 06:44:47 (-0700) 3 AM  1     litres,     1 litres per min
-27.08.17 06:44:47 (-0700) 4 AM  258     litres,     4.30 litres per min
-27.08.17 06:44:47 (-0700) 5 AM  951     litres,     15.85 litres per min
-27.08.17 06:44:47 (-0700) 6 AM  706     litres,     11.76 litres per min
-27.08.17 06:44:47 (-0700) 7 AM  110     litres,     1.83 litres per min
-
+- ____________________________________________________________________________________________
+-  Hourly updates for Irrigation trouble-shooting
+-  Quantity and the Approximate Average Flow-Rate each hour
+- ___________________________________________________________________________________________
+- 27.08.17 06:44:47 (-0700)  1 AM  0         litres,     0 litres per min
+- 27.08.17 06:44:47 (-0700)  2 AM  0         litres,     0 litres per min
+- 27.08.17 06:44:47 (-0700)  3 AM  1         litres,     1 litres per min
+- 27.08.17 06:44:47 (-0700)  4 AM  258     litres,     4.30 litres per min
+- 27.08.17 06:44:47 (-0700)  5 AM  951     litres,     15.85 litres per min
+- 27.08.17 06:44:47 (-0700)  6 AM  706     litres,     11.76 litres per min
+- 27.08.17 06:44:47 (-0700)  7 AM  110     litres,     1.83 litres per min
+-
+- Daily Consumption Data in Litres
+- Total Consumption of Irrigation meter at 9 PM (PDT)    : 980758  Litres
+- Total Consumption of Irrigation meter at 9 AM (PDT)    : 978364  Litres
+- Irrigation Consumption last night (9PM to 9AM PDT)     : 3054 Litres
+- Irrigation Consumption yesterday  (9AM to 9PM PDT)     : 2394   Litres
+- Average Irrigation rate of flow last night (9PM to 9AM): 4.24 Litres per min
+- Average Irrigation rate of flow yesterday  (9AM to 9PM): 3.32  Litres per min
+- House Consumption for the previous calandar day        : 275 Litres
  
  ********************************************************************************************
  *                Total Consumption Data in Cubic Meters
