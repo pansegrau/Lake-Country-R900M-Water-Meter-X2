@@ -37,18 +37,26 @@
 - Decide what you want to do with the meter readings (I use [StatX](https://statx.io) to log the readings and view them on my phone)
 ## Sample Output
 
-- 19.08.17 23:36:31 (-0700) Daily Consumption Data in Litres --------------------------------------------------
-- 19.08.17 23:36:31 (-0700) Total Consumption of Irrigation meter at 9 PM (PDT)    : 915888 Litres
-- 19.08.17 23:36:31 (-0700) Total Consumption of Irrigation meter at 9 AM (PDT)    : 911094 Litres
-- 19.08.17 23:36:31 (-0700) Irrigation Consumption last night (9PM to 9AM PDT) was : 10221 Litres
-- 19.08.17 23:36:31 (-0700) Irrigation Consumption yesterday  (9AM to 9PM PDT) was : 4794 Litres
-- 19.08.17 23:36:31 (-0700) Average Irrigation rate of flow last night (9PM to 9AM): 14 Litres per min
-- 19.08.17 23:36:31 (-0700) Average Irrigation rate of flow yesterday  (9AM to 9PM): 6 Litres per min
-- 19.08.17 23:36:31 (-0700) House Consumption for the previous calandar day        : 504 Litres
-- 19.08.17 23:36:31 (-0700) Total Consumption Data in Cubic Meters ---------------------------------------------
-- 19.08.17 23:36:31 (-0700) Consumption Pit Meter                                  : 998.155 Cubic Meters
-- 19.08.17 23:36:31 (-0700) Consumption Irrigation                                 : 916.294 Cubic Meters
-- 19.08.17 23:36:31 (-0700) Consumption Non-Irrigation                             : 81 Cubic Meters
+____________________________________________________________________________________________
+ Hourly updates for Irrigation trouble-shooting
+ Quantity and the Approximate Average Flow-Rate each hour
+ ___________________________________________________________________________________________
+ 1 AM  0     litres,     0 litres per min
+ 2 AM  0     litres,     0 litres per min
+ 3 AM  1     litres,     1 litres per min
+ 4 AM  258     litres,     4.30 litres per min
+ 5 AM  951     litres,     15.85 litres per min
+ 6 AM  706     litres,     11.76 litres per min
+ 7 AM  110     litres,     1.83 litres per min
+ ......
+ 
+ ********************************************************************************************
+ *                Total Consumption Data in Cubic Meters
+ *    Consumption Pit Meter                           1067.875 Cubic Meters
+ *    Consumption Irrigation                          983.11 Cubic Meters
+ *    Consumption Non-Irrigation                      84.76 Cubic Meters
+ ********************************************************************************************
 
+....
 ## My current setup
 ![Raspberry Pi](https://cloud.githubusercontent.com/assets/2868/21464807/14e7c1b6-c957-11e6-8049-69b19969f817.jpg)
