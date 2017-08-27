@@ -48,7 +48,8 @@
 - 27.08.17 06:44:47 (-0700)  5 AM  951     litres,     15.85 litres per min
 - 27.08.17 06:44:47 (-0700)  6 AM  706     litres,     11.76 litres per min
 - 27.08.17 06:44:47 (-0700)  7 AM  110     litres,     1.83 litres per min
--
+- ....
+- 
 - Daily Consumption Data in Litres
 - Total Consumption of Irrigation meter at 9 PM (PDT)    : 980758  Litres
 - Total Consumption of Irrigation meter at 9 AM (PDT)    : 978364  Litres
