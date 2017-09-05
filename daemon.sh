@@ -296,8 +296,8 @@ while true; do
     flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
     flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
     flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
-    flowzoneG=$(echo $((100 * zoneE / ZONETIMEG))| sed 's/..$/.&/')
-    flowzoneH=$(echo $((100 * zoneF / ZONETIMEH))| sed 's/..$/.&/')
+    flowzoneG=$(echo $((100 * zoneG / ZONETIMEG))| sed 's/..$/.&/')
+    flowzoneH=$(echo $((100 * zoneH / ZONETIMEH))| sed 's/..$/.&/')
     echo $night > /data/binnight
     echo $zoneA > /data/binzoneA
     echo $zoneB > /data/binzoneB
