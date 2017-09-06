@@ -270,8 +270,8 @@ while true; do
     echo $housemidnight > /data/binhousemidnight
   fi
   
-  #calculate irrigation consumption for previous night done after 12 PM (adjusted for UTC)
-  if [[ `date +%H` -ge 19 && `date +%H` -lt 20 ]];then
+  #calculate irrigation consumption for previous night done after 1 PM (adjusted for UTC)
+  if [[ `date +%H` -ge 20 && `date +%H` -lt 21 ]];then
     t6PM=$(cat /data/bin6PM)
     t9PM=$(cat /data/bin9PM)
     t12AM=$(cat /data/bin12AM)
