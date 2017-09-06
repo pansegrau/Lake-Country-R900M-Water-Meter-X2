@@ -270,8 +270,8 @@ while true; do
     echo $housemidnight > /data/binhousemidnight
   fi
   
-  #calculate irrigation consumption for previous night done after 2 PM (adjusted for UTC)
-  if [[ `date +%H` -ge 21 && `date +%H` -lt 22 ]];then
+  #calculate irrigation consumption for previous night done after 12 PM (adjusted for UTC)
+  if [[ `date +%H` -ge 19 && `date +%H` -lt 20 ]];then
     t6PM=$(cat /data/bin6PM)
     t9PM=$(cat /data/bin9PM)
     t12AM=$(cat /data/bin12AM)
@@ -279,7 +279,6 @@ while true; do
     t6AM=$(cat /data/bin6AM)
     t9AM=$(cat /data/bin9AM)
     t12PM=$(cat /data/bin12PM)
-    t3PM=$(cat /data/bin3PM)
     night=$(echo $((t9AM - t9PM)))
     zoneA=$(echo $((t9PM - t6PM)))
     zoneB=$(echo $((t12AM - t9PM)))
@@ -287,8 +286,6 @@ while true; do
     zoneD=$(echo $((t6AM - t3AM)))
     zoneE=$(echo $((t9AM - t6AM)))
     zoneF=$(echo $((t12PM - t9AM)))
-    zoneG=$(echo $((t3PM - t12PM)))
-    zoneH=$(echo $((t6PM - t3PM)))
     flowrate=$(echo $((100 * night / 720))| sed 's/..$/.&/')
     flowzoneA=$(echo $((100 * zoneA / ZONETIMEA))| sed 's/..$/.&/')
     flowzoneB=$(echo $((100 * zoneB / ZONETIMEB))| sed 's/..$/.&/')
@@ -296,8 +293,6 @@ while true; do
     flowzoneD=$(echo $((100 * zoneD / ZONETIMED))| sed 's/..$/.&/')
     flowzoneE=$(echo $((100 * zoneE / ZONETIMEE))| sed 's/..$/.&/')
     flowzoneF=$(echo $((100 * zoneF / ZONETIMEF))| sed 's/..$/.&/')
-    flowzoneG=$(echo $((100 * zoneG / ZONETIMEG))| sed 's/..$/.&/')
-    flowzoneH=$(echo $((100 * zoneH / ZONETIMEH))| sed 's/..$/.&/')
     echo $night > /data/binnight
     echo $zoneA > /data/binzoneA
     echo $zoneB > /data/binzoneB
@@ -305,8 +300,6 @@ while true; do
     echo $zoneD > /data/binzoneD
     echo $zoneE > /data/binzoneE
     echo $zoneF > /data/binzoneF
-    echo $zoneG > /data/binzoneG
-    echo $zoneH > /data/binzoneH
     echo $flowrate > /data/binflowrate
     echo $flowzoneA > /data/binflowzoneA
     echo $flowzoneB > /data/binflowzoneB
@@ -314,6 +307,18 @@ while true; do
     echo $flowzoneD > /data/binflowzoneD
     echo $flowzoneE > /data/binflowzoneE
     echo $flowzoneF > /data/binflowzoneF
+  fi
+  #calculate irrigation consumption for previous afternoon done after 4 AM (adjusted for UTC)
+  if [[ `date +%H` -ge 10 && `date +%H` -lt 11 ]];then
+    t6PM=$(cat /data/bin6PM)
+    t12PM=$(cat /data/bin12PM)
+    t3PM=$(cat /data/bin3PM)
+    zoneG=$(echo $((t3PM - t12PM)))
+    zoneH=$(echo $((t6PM - t3PM)))
+    flowzoneG=$(echo $((100 * zoneG / ZONETIMEG))| sed 's/..$/.&/')
+    flowzoneH=$(echo $((100 * zoneH / ZONETIMEH))| sed 's/..$/.&/')
+    echo $zoneG > /data/binzoneG
+    echo $zoneH > /data/binzoneH
     echo $flowzoneG > /data/binflowzoneG
     echo $flowzoneH > /data/binflowzoneH
   fi
