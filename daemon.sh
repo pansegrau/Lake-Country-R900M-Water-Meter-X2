@@ -29,20 +29,20 @@ while true; do
   sleep 10 #Let rtl_tcp startup and open a port
 
   json=$(rtlamr -msgtype=r900 -filterid=$METERID -single=true -format=json)
-  echo "Meter info: $json"
+  echo "Meter2 info: $json"
 
   consumption=$(echo $json | python -c "import json,sys;obj=json.load(sys.stdin);print float(obj[\"Message\"][\"Consumption\"])/$UNIT_DIVISOR")
   echo "Total Consumption: $consumption $UNIT"
 
-#Collect data from Irrigation meter
+#Collect data from meter2
 
 consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "Consumption Irrigation Meter: $consumption Cubic Meters"
+  echo "Consumption Meter2: $consumption Cubic Meters"
   irrmeter=$consumption
   irr=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
   
-  #Now process that data from Irrigation meter
+  #Now process that data from meter2
   #convert to integer
   irrint=${irr%.*}
   
@@ -209,14 +209,14 @@ leaknowcheckint=${leaknowcheck%.*}
   
  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
  
- #Collect data from Pit meter
+ #Collect data from meter1
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
-  echo "Pit meter info: $json"
+  echo "Meter1 info: $json"
   consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
   pitmeter=$consumption
   echo "Total Consumption: $consumption $UNIT"
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "Consumption Pit Meter: $consumption Cubic Meters"
+  echo "Consumption Meter1: $consumption Cubic Meters"
 pit=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
 
 #convert to integer
@@ -610,39 +610,39 @@ pitint=${pit%.*}
  echo "House Consumption for the previous calandar day     :$housemidnight Litres"
   echo "********************************************************************************************"
   echo "*                Total Consumption Data in Cubic Meters                                    "
-  echo "*    Consumption Pit Meter                           $pitmeter Cubic Meters                "
-  echo "*    Consumption Irrigation                          $irrmeter Cubic Meters                "
-  echo "*    Consumption Non-Irrigation                      $housemeter Cubic Meters              "
+  echo "*    Consumption Meter One                           $pitmeter Cubic Meters                "
+  echo "*    Consumption Meter Two                          $irrmeter Cubic Meters                "
+  echo "*    Consumption Difference                      $housemeter Cubic Meters              "
   echo "********************************************************************************************"
-  echo "Pit Leaks             : $leakcheckp $UNIT2"
-  echo "Pit Leaknow           : $leaknowcheckp $UNIT2"
-  echo "Pit Backflow          : $backflowcheckp $UNIT2"
-  echo "Irrigation Leaks      : $leakcheck $UNIT2"
-  echo "Irrigation Leaknow    : $leaknowcheck $UNIT2"
-  echo "Irrigation Backflow   : $backflowcheck $UNIT2"
+  echo "Meter1 Leaks             : $leakcheckp $UNIT2"
+  echo "Meter1 Leaknow           : $leaknowcheckp $UNIT2"
+  echo "Meter1 Backflow          : $backflowcheckp $UNIT2"
+  echo "Meter2 Leaks             : $leakcheck $UNIT2"
+  echo "Meter2 Leaknow           : $leaknowcheck $UNIT2"
+  echo "Meter2 Backflow          : $backflowcheck $UNIT2"
 
 if [ "$leakcheckintp" -gt "$testnumber" ]; then
-  echo "Yes there was a leak this week in Pit System" ; else
+  echo "Yes there was a leak this week in Meter1 System" ; else
   echo ":)"  
 fi
 if [ "$leaknowcheckintp" -gt "$testnumber" ]; then
-  echo "Yes there is a leak today in Pit System" ; else
+  echo "Yes there is a leak today in Meter1 System" ; else
   echo ":)  :)"    
 fi
 if [ "$backflowcheckintp" -gt "$testnumber" ]; then
-  echo "HELP! there is a backflow in Pit System"; else
+  echo "HELP! there is a backflow in Meter1 System"; else
   echo ":)  :)  :)"    
 fi  
 if [[ "$leakcheckint" -gt "$testnumber" ]]; then
-  echo "Yes there was a leak this week in Irrigation System" ; else
+  echo "Yes there was a leak this week in Meter2 System" ; else
   echo ";)"
 fi
 if [[ "$leaknowcheckint" -gt "$testnumber" ]]; then
-  echo "Yes there is a leak today in Irrigation System" ; else
+  echo "Yes there is a leak today in Meter2 System" ; else
   echo ";)  ;)"  
 fi
 if [[ "$backflowcheckint" -gt "$testnumber" ]]; then
-  echo "HELP! there is a backflow in Irrigation System" ; else
+  echo "HELP! there is a backflow in Meter2 System" ; else
   echo ";)  ;)  ;)"  
 fi
 
@@ -650,7 +650,7 @@ fi
 echo "********************************************************************************************"
 echo "Compare the consumption of two meters connected in series"
   echo "******************************************************************************************"
-  echo "Irrigation,    Pit Meter"
+  echo "Meter Two,        Meter One"
   echo "___________________________________________________________________________________________"
   echo "1 AM  $q1AM ,  $q1AMb  litres, "    
   echo "2 AM  $q2AM ,  $q2AMb  litres, " 
