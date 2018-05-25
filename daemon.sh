@@ -29,7 +29,7 @@ while true; do
   sleep 10 #Let rtl_tcp startup and open a port
 
   json=$(rtlamr -msgtype=r900 -filterid=$METERID -single=true -format=json)
-  echo "Meter2 info: $json"
+  echo "Meter 2 info: $json"
 
   consumption=$(echo $json | python -c "import json,sys;obj=json.load(sys.stdin);print float(obj[\"Message\"][\"Consumption\"])/$UNIT_DIVISOR")
   echo "Total Consumption: $consumption $UNIT"
@@ -38,7 +38,7 @@ while true; do
 
 consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "Consumption Meter2: $consumption Cubic Meters"
+  echo "Consumption Meter 2: $consumption Cubic Meters"
   irrmeter=$consumption
   irr=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
   
@@ -211,12 +211,12 @@ leaknowcheckint=${leaknowcheck%.*}
  
  #Collect data from meter1
   json=$(rtlamr -msgtype=r900 -filterid=$METERID2 -single=true -format=json)
-  echo "Meter1 info: $json"
+  echo "Meter 1 info: $json"
   consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
   pitmeter=$consumption
   echo "Total Consumption: $consumption $UNIT"
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "Consumption Meter1: $consumption Cubic Meters"
+  echo "Consumption Meter 1: $consumption Cubic Meters"
 pit=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1')
 
 #convert to integer
@@ -398,7 +398,7 @@ pitint=${pit%.*}
   
  echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 #need timely updates for irrigation troubleshooting
-  echo "Hourly updates for Irrigation trouble-shooting"
+  echo "Hourly updates for Meter Two trouble-shooting"
   t1PM=$(cat /data/bin1PM)
   t2PM=$(cat /data/bin2PM)
   t3PM=$(cat /data/bin3PM)
@@ -473,7 +473,7 @@ pitint=${pit%.*}
   f11PM=$(echo $((100 * q11PM / 60))| sed 's/..$/.&/')
   f12AM=$(echo $((100 * q12AM / 60))| sed 's/..$/.&/')
   
-  echo "Quantity and the Approximate Average Flow-Rate each hour"
+  echo "Meter Two: Quantity and the Approximate Average Flow-Rate"
   echo "___________________________________________________________________________________________"
   echo "1 AM  $q1AM     litres,     $f1AM litres per min"    
   echo "2 AM  $q2AM     litres,     $f2AM litres per min" 
@@ -501,7 +501,7 @@ pitint=${pit%.*}
   echo "12 AM $q12AM     litres,     $f12AM litres per min"
 
 #need timely updates for pit troubleshooting
-  echo "Hourly updates for Pit trouble-shooting"
+  echo "Hourly updates for Meter One trouble-shooting"
   t1PMb=$(cat /data/bin1PMb)
   t2PMb=$(cat /data/bin2PMb)
   t3PMb=$(cat /data/bin3PMb)
@@ -576,7 +576,7 @@ pitint=${pit%.*}
   f11PMb=$(echo $((100 * q11PMb / 60))| sed 's/..$/.&/')
   f12AMb=$(echo $((100 * q12AMb / 60))| sed 's/..$/.&/')
   
-  echo "Quantity and the Approximate Average Flow-Rate each hour"
+  echo "Meter One :Quantity and the Approximate Average Flow-Rate"
   echo "___________________________________________________________________________________________"
   echo "1 AM  $q1AMb     litres,     $f1AMb litres per min"    
   echo "2 AM  $q2AMb     litres,     $f2AMb litres per min" 
@@ -604,78 +604,78 @@ pitint=${pit%.*}
   echo "12 AM $q12AMb     litres,     $f12AMb litres per min"
   
   # recall data from disk as program may have rebooted
- housemidnight=$(cat /data/binhousemidnight)
+ #housemidnight=$(cat /data/binhousemidnight)
  
- echo "********************************************************************************************" 
- echo "House Consumption for the previous calandar day     :$housemidnight Litres"
+ #echo "********************************************************************************************" 
+ #echo "House Consumption for the previous calandar day     :$housemidnight Litres"
   echo "********************************************************************************************"
   echo "*                Total Consumption Data in Cubic Meters                                    "
   echo "*    Consumption Meter One                           $pitmeter Cubic Meters                "
   echo "*    Consumption Meter Two                          $irrmeter Cubic Meters                "
-  echo "*    Consumption Difference                      $housemeter Cubic Meters              "
+  #echo "*    Consumption Difference                      $housemeter Cubic Meters              "
   echo "********************************************************************************************"
-  echo "Meter1 Leaks             : $leakcheckp $UNIT2"
-  echo "Meter1 Leaknow           : $leaknowcheckp $UNIT2"
-  echo "Meter1 Backflow          : $backflowcheckp $UNIT2"
-  echo "Meter2 Leaks             : $leakcheck $UNIT2"
-  echo "Meter2 Leaknow           : $leaknowcheck $UNIT2"
-  echo "Meter2 Backflow          : $backflowcheck $UNIT2"
+  echo "Meter 1 Leaks             : $leakcheckp $UNIT2"
+  echo "Meter 1 Leaknow           : $leaknowcheckp $UNIT2"
+  echo "Meter 1 Backflow          : $backflowcheckp $UNIT2"
+  echo "Meter 2 Leaks             : $leakcheck $UNIT2"
+  echo "Meter 2 Leaknow           : $leaknowcheck $UNIT2"
+  echo "Meter 2 Backflow          : $backflowcheck $UNIT2"
 
 if [ "$leakcheckintp" -gt "$testnumber" ]; then
-  echo "Yes there was a leak this week in Meter1 System" ; else
+  echo "Yes, constant flow this week in Meter 1 System" ; else
   echo ":)"  
 fi
 if [ "$leaknowcheckintp" -gt "$testnumber" ]; then
-  echo "Yes there is a leak today in Meter1 System" ; else
+  echo "Yes, constant flow today in Meter 1 System" ; else
   echo ":)  :)"    
 fi
 if [ "$backflowcheckintp" -gt "$testnumber" ]; then
-  echo "HELP! there is a backflow in Meter1 System"; else
+  echo "HELP! there is a backflow in Meter 1 System"; else
   echo ":)  :)  :)"    
 fi  
 if [[ "$leakcheckint" -gt "$testnumber" ]]; then
-  echo "Yes there was a leak this week in Meter2 System" ; else
+  echo "Yes, constant flow this week in Meter 2 System" ; else
   echo ";)"
 fi
 if [[ "$leaknowcheckint" -gt "$testnumber" ]]; then
-  echo "Yes there is a leak today in Meter2 System" ; else
+  echo "Yes, constant flow today in Meter 2 System" ; else
   echo ";)  ;)"  
 fi
 if [[ "$backflowcheckint" -gt "$testnumber" ]]; then
-  echo "HELP! there is a backflow in Meter2 System" ; else
+  echo "HELP! there is a backflow in Meter 2 System" ; else
   echo ";)  ;)  ;)"  
 fi
 
 
 echo "********************************************************************************************"
-echo "Compare the consumption of two meters connected in series"
+echo "Track hourly consumption of two meters"
   echo "******************************************************************************************"
-  echo "Meter Two,        Meter One"
+  echo "Meter One,        Meter Two"
   echo "___________________________________________________________________________________________"
-  echo "1 AM  $q1AM ,  $q1AMb  litres, "    
-  echo "2 AM  $q2AM ,  $q2AMb  litres, " 
-  echo "3 AM  $q3AM ,  $q3AMb  litres, " 
-  echo "4 AM  $q4AM ,  $q4AMb  litres, " 
-  echo "5 AM  $q5AM ,  $q5AMb  litres, " 
-  echo "6 AM  $q6AM ,  $q6AMb  litres, " 
-  echo "7 AM  $q7AM ,  $q7AMb  litres, " 
-  echo "8 AM  $q8AM ,  $q8AMb  litres, " 
-  echo "9 AM  $q9AM ,  $q9AMb  litres, " 
-  echo "10 AM $q10AM ,  $q10AMb litres, " 
-  echo "11 AM $q11AM ,  $q11AMb litres, "
-  echo "12 PM $q12PM ,  $q12PMb litres, "
-  echo "1 PM  $q1PM ,  $q1PMb  litres, "
-  echo "2 PM  $q2PM ,  $q2PMb  litres, "
-  echo "3 PM  $q3PM ,  $q3PMb  litres, "
-  echo "4 PM  $q4PM ,  $q4PMb  litres, "
-  echo "5 PM  $q5PM ,  $q5PMb  litres, "
-  echo "6 PM  $q6PM ,  $q6PMb  litres, "
-  echo "7 PM  $q7PM ,  $q7PMb  litres, "
-  echo "8 PM  $q8PM ,  $q8PMb  litres, "
-  echo "9 PM  $q9PM ,  $q9PMb  litres, "
-  echo "10 PM $q10PM ,  $q10PMb litres, "
-  echo "11 PM $q11PM ,  $q11PMb litres, "
-  echo "12 AM $q12AM ,  $q12AMb litres, "
+  echo "1 AM  $q1AMb ,  $q1AM  litres, "    
+  echo "2 AM  $q2AMb ,  $q2AM  litres, " 
+  echo "3 AM  $q3AMb ,  $q3AM  litres, " 
+  echo "4 AM  $q4AMb ,  $q4AM  litres, " 
+  echo "5 AM  $q5AMb ,  $q5AM  litres, " 
+  echo "6 AM  $q6AMb ,  $q6AM  litres, " 
+  echo "7 AM  $q7AMb ,  $q7AM  litres, " 
+  echo "8 AM  $q8AMb ,  $q8AM  litres, " 
+  echo "9 AM  $q9AMb ,  $q9AM  litres, " 
+  echo "10 AM $q10AMb ,  $q10AM litres, " 
+  echo "11 AM $q11AMb ,  $q11AM litres, "
+  echo "12 PM $q12PMb ,  $q12PM litres, "
+  echo "1 PM  $q1PMb ,  $q1PM  litres, "
+  echo "2 PM  $q2PMb ,  $q2PM  litres, "
+  echo "3 PM  $q3PMb ,  $q3PM  litres, "
+  echo "4 PM  $q4PMb ,  $q4PM  litres, "
+  echo "5 PM  $q5PMb ,  $q5PM  litres, "
+  echo "6 PM  $q6PMb ,  $q6PM  litres, "
+  echo "7 PM  $q7PMb ,  $q7PM  litres, "
+  echo "8 PM  $q8PMb ,  $q8PM  litres, "
+  echo "9 PM  $q9PMb ,  $q9PM  litres, "
+  echo "10 PM $q10PMb ,  $q10PM litres, "
+  echo "11 PM $q11PMb ,  $q11PM litres, "
+  echo "12 AM $q12AMb ,  $q12AM litres, "
   # Replace with your custom logging code
   if [ ! -z "$CURL_API" ]; then
     echo "Logging to custom API"
