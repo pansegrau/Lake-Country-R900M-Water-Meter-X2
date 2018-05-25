@@ -13,7 +13,7 @@ if [ -z "$METERID2" ]; then
   rtl_tcp
   exit 0
 fi
-
+echo "step 1"
 UNIT_DIVISOR=1000
 UNIT="Cubic Meters"
 UNIT2="Warning"
@@ -21,12 +21,14 @@ UNIT2="Warning"
 # Kill this script (and restart the container) if we haven't seen an update in 30 minutes
 # Nasty issue probably related to a memory leak, but this works really well, so not changing it
 ./watchdog.sh 30 updated.log &
+echo "step 2"
 
 while true; do
   # Suppress the very verbose output of rtl_tcp and background the process
   rtl_tcp &> /dev/null &
   rtl_tcp_pid=$! # Save the pid for murder later
   sleep 10 #Let rtl_tcp startup and open a port
+  echo "step 3"
 
   json=$(rtlamr -msgtype=r900 -filterid=$METERID -single=true -format=json)
   echo "Meter 2 info: $json"
@@ -35,6 +37,7 @@ while true; do
   echo "Total Consumption: $consumption $UNIT"
 
 #Collect data from meter2
+  echo "step 4"
 
 consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Consumption"])/1000')
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -45,7 +48,8 @@ consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);p
   #Now process that data from meter2
   #convert to integer
   irrint=${irr%.*}
-  
+  echo "step 5"
+
   leak=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["Leak"])/1')
   leakcheck=$leak
   backflow=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);print float(obj["Message"]["BackFlow"])/1')
@@ -54,7 +58,7 @@ consumption=$(echo $json | python -c 'import json,sys;obj=json.load(sys.stdin);p
   leaknowcheck=$leaknow
    
   testnumber=0
-  echo "test number is: $testnumber"
+  #echo "test number is: $testnumber"
     
 #convert to integers
 leakcheckint=${leakcheck%.*}
